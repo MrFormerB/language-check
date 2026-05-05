@@ -3,50 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LinguaQuest – Professional Language Placement</title>
+<title>LinguaQuest Pro – Sprachniveau-Test</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-/* (Stile bleiben weitgehend gleich, Ergänzungen für Audio-Buttons und Feedback) */
+/* (Beibehalten der bestehenden Styles für Konsistenz, ergänzt um Audio-Buttons) */
 :root {
   --bg: #0a0a0f; --surface: #13131c; --surface2: #1c1c2a; --surface3: #252538;
-  --border: rgba(255,255,255,0.07); --neon: #7c3aed; --neon2: #a855f7;
+  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.13);
+  --neon: #7c3aed; --neon2: #a855f7; --neon-glow: rgba(124,58,237,0.35);
   --cyan: #06b6d4; --green: #10b981; --yellow: #f59e0b; --red: #ef4444;
-  --text: #f1f0ff; --text2: rgba(241,240,255,0.55);
+  --text: #f1f0ff; --text2: rgba(241,240,255,0.55); --text3: rgba(241,240,255,0.3);
+  --r-sm: 10px; --r-md: 16px; --r-lg: 24px; --r-xl: 32px;
   --font-head: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
-  --r-md: 16px; --r-lg: 24px;
+  --a2: #06b6d4; --b1: #10b981; --b2: #f59e0b; --c1: #ec4899;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
-.bg-grid { position: fixed; inset: 0; z-index: 0; background-image: linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px); background-size: 60px 60px; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; line-height: 1.6; }
+.bg-grid { position: fixed; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px); background-size: 60px 60px; }
 #app { position: relative; z-index: 1; }
 .screen { display: none; min-height: 100vh; }
 .screen.active { display: flex; flex-direction: column; }
-.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s; text-decoration: none; }
-.btn-primary { background: linear-gradient(135deg, var(--neon), var(--neon2)); color: white; }
-.btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
-.btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border); }
-.input { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; color: var(--text); padding: 12px 16px; width: 100%; outline: none; }
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 28px; }
-.nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 32px; border-bottom: 1px solid var(--border); background: rgba(10,10,15,0.8); backdrop-filter: blur(12px); sticky; top: 0; z-index: 100; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border: none; border-radius: var(--r-sm); font-weight: 600; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+.btn-primary { background: linear-gradient(135deg, var(--neon), var(--neon2)); color: white; box-shadow: 0 0 24px var(--neon-glow); }
+.btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border2); }
+.btn-sm { padding: 8px 16px; font-size: 0.82rem; }
+.btn-audio { background: rgba(124,58,237,0.15); border: 1px solid var(--neon); color: var(--neon2); font-size: 0.85rem; }
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 32px; border-bottom: 1px solid var(--border); background: rgba(10,10,15,0.8); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; }
 .nav-logo { font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, var(--neon2), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 28px; }
 .progress-bar { height: 6px; background: var(--surface3); border-radius: 99px; overflow: hidden; }
-.progress-fill { height: 100%; background: linear-gradient(90deg, var(--neon), var(--cyan)); transition: width 0.5s; }
-.results-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-.results-table th, .results-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
-.audio-controls { display: flex; gap: 10px; margin-top: 15px; }
-.recommendation-list { margin: 15px 0; padding-left: 20px; }
-.recommendation-list li { margin-bottom: 8px; color: var(--text2); }
-/* Spezifische Test-Elemente */
-.mc-option { background: var(--surface2); border: 2px solid var(--border); border-radius: 12px; padding: 15px; cursor: pointer; margin-bottom: 10px; transition: 0.2s; }
-.mc-option:hover { border-color: var(--neon); }
+.progress-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--neon), var(--cyan)); transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.results-table { width: 100%; border-collapse: collapse; }
+.results-table td, .results-table th { padding: 14px 16px; border-bottom: 1px solid var(--border); text-align: left; }
+.mc-options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
+.mc-option { background: var(--surface2); border: 2px solid var(--border); border-radius: var(--r-md); padding: 18px; cursor: pointer; transition: all 0.2s; }
 .mc-option.selected { border-color: var(--neon); background: rgba(124,58,237,0.1); }
-.mc-option.correct { border-color: var(--green); }
-.mc-option.wrong { border-color: var(--red); }
-.fib-input { background: var(--surface3); border: 2px solid var(--border); color: white; padding: 5px 10px; border-radius: 5px; }
-.error-word { cursor: pointer; padding: 2px 4px; border-radius: 4px; }
-.error-word:hover { background: rgba(245,158,11,0.2); }
-.error-word.selected { background: var(--red); }
+.fib-input { background: var(--surface3); border: 2px solid var(--border2); border-radius: 6px; padding: 8px 12px; color: white; width: 100%; margin-top: 10px; }
+.audio-controls { display: flex; gap: 10px; margin-top: 15px; }
 </style>
 </head>
 <body>
@@ -55,13 +49,19 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--text);
 <div id="app">
   <!-- START SCREEN -->
   <div class="screen active" id="landing-screen">
-    <nav class="nav"><div class="nav-logo">LinguaQuest</div></nav>
-    <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; text-align:center;">
-      <h1 style="font-family:var(--font-head); font-size:3.5rem; margin-bottom:10px;">Ready to <span style="color:var(--neon2)">Level Up?</span></h1>
-      <p style="color:var(--text2); max-width:600px; margin-bottom:30px;">Der adaptive Englischtest für die Oberstufe. Präzise Analyse, Gamification und individuelles Feedback.</p>
-      <div style="display:flex; gap:15px;">
-        <button class="btn btn-primary" onclick="showScreen('student-join-screen')">Start Test</button>
-        <button class="btn btn-secondary" onclick="showScreen('teacher-screen'); teacherInit();">Teacher Login</button>
+    <nav class="nav">
+      <div class="nav-logo">Lingua<span>Quest</span></div>
+      <div class="nav-right">
+        <button class="btn btn-primary btn-sm" onclick="showScreen('teacher-screen'); renderGroups();">👩‍🏫 Lehrer-Login</button>
+      </div>
+    </nav>
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding: 20px;">
+      <h1 style="font-family:var(--font-head); font-size:3.5rem; margin-bottom:10px;">Ready for the <span style="color:var(--neon2)">Quest?</span></h1>
+      <p style="color:var(--text2); max-width:600px; margin-bottom:30px;">Verbessere dein Englisch mit personalisierten Aufgaben und direktem Feedback.</p>
+      <div class="card" style="width:100%; max-width:400px;">
+        <input type="text" id="student-name" class="fib-input" placeholder="Dein Name" style="margin-bottom:15px; margin-top:0;">
+        <input type="text" id="join-code" class="fib-input" placeholder="Klassen-Code (z.B. DEMO1)" style="margin-bottom:20px; margin-top:0;">
+        <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="joinTest()">Quest starten 🚀</button>
       </div>
     </div>
   </div>
@@ -69,47 +69,61 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--text);
   <!-- TEACHER SCREEN -->
   <div class="screen" id="teacher-screen">
     <nav class="nav">
-      <div class="nav-logo">LinguaQuest <span>Admin</span></div>
-      <button class="btn btn-ghost" onclick="showScreen('landing-screen')">Logout</button>
+      <div class="nav-logo">LQ <span>Dashboard</span></div>
+      <button class="btn btn-secondary btn-sm" onclick="showScreen('landing-screen')">Abmelden</button>
     </nav>
-    <div style="padding:32px; max-width:1200px; margin:0 auto; width:100%;">
-      <h2 style="font-family:var(--font-head); margin-bottom:20px;">Dashboard: Ergebnisse pro Schüler*in</h2>
+    <div style="padding: 32px;">
+      <h2 style="font-family:var(--font-head); margin-bottom:20px;">Ergebnisse deiner Schüler</h2>
       <div class="card">
-        <div id="teacher-results-container">
-          <p style="color:var(--text3)">Keine Ergebnisse vorhanden.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- STUDENT JOIN SCREEN -->
-  <div class="screen" id="student-join-screen">
-    <div style="flex:1; display:flex; align-items:center; justify-content:center;">
-      <div class="card" style="width:100%; max-width:400px;">
-        <h2 style="margin-bottom:20px; text-align:center;">Join Test</h2>
-        <input class="input" id="student-name" placeholder="Dein Name" style="margin-bottom:15px;">
-        <button class="btn btn-primary" style="width:100%;" onclick="startPlacementTest()">Test starten</button>
+        <table class="results-table">
+          <thead>
+            <tr><th>Name</th><th>Gruppe</th><th>Score</th><th>Empfehlung</th></tr>
+          </thead>
+          <tbody id="teacher-results-body">
+            <!-- JS dynamic -->
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 
   <!-- TEST SCREEN -->
   <div class="screen" id="test-screen">
-    <div class="nav">
-      <div id="test-info">Frage 1/5</div>
-      <div style="width:200px;"><div class="progress-bar"><div class="progress-fill" id="test-progress" style="width:0%"></div></div></div>
+    <div style="padding:20px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:20px;">
+      <div style="flex:1">
+        <div id="test-progress-text" style="font-size:0.8rem; margin-bottom:5px;">Aufgabe 1</div>
+        <div class="progress-bar"><div id="test-progress-fill" class="progress-fill" style="width:0%"></div></div>
+      </div>
+      <div id="current-grammar-tag" style="font-size:0.7rem; padding:4px 8px; background:var(--surface3); border-radius:4px; color:var(--neon2); font-weight:700;">WH-QUESTIONS</div>
     </div>
-    <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px;">
-      <div id="question-container" style="max-width:700px; width:100%;"></div>
-      <div style="margin-top:20px;"><button class="btn btn-primary" id="next-btn" onclick="checkAnswer()">Prüfen</button></div>
+    <div id="question-container" style="flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px;">
+      <!-- JS dynamic -->
+    </div>
+    <div style="padding:20px; border-top:1px solid var(--border); display:flex; justify-content:flex-end;">
+      <button class="btn btn-primary" id="next-btn" onclick="submitAnswer()">Prüfen & Weiter</button>
     </div>
   </div>
 
   <!-- RESULTS SCREEN -->
   <div class="screen" id="results-screen">
-    <div style="padding:40px; max-width:800px; margin:0 auto; width:100%;">
-      <div class="card" id="results-content">
-        <!-- JS Content -->
+    <div style="flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px;">
+      <div class="card" style="max-width:600px; width:100%; text-align:center;">
+        <h2 id="final-score-title" style="font-family:var(--font-head); font-size:2rem; margin-bottom:10px;">Auswertung</h2>
+        <div id="score-display" style="font-size:3rem; font-weight:800; color:var(--cyan); margin-bottom:20px;">80%</div>
+        
+        <div id="recommendation-box" style="text-align:left; background:var(--surface2); padding:20px; border-radius:var(--r-md); margin-bottom:20px;">
+          <h3 style="font-size:1rem; margin-bottom:10px;">Deine personalisierte Empfehlung:</h3>
+          <ul id="recommendation-list" style="margin-left:20px; font-size:0.9rem; color:var(--text2);">
+            <!-- JS dynamic -->
+          </ul>
+        </div>
+
+        <div class="audio-controls">
+          <button class="btn btn-audio" onclick="speakRecommendation('de')">Listen (Deutsch) 🇩🇪</button>
+          <button class="btn btn-audio" onclick="speakRecommendation('en')">Listen (English) 🇺🇸</button>
+        </div>
+        
+        <button class="btn btn-primary" style="margin-top:30px; width:100%; justify-content:center;" onclick="location.reload()">Zurück zum Start</button>
       </div>
     </div>
   </div>
@@ -117,219 +131,201 @@ body { font-family: var(--font-body); background: var(--bg); color: var(--text);
 
 <script>
 /* ============================================================
-   GRAMMAR DATA - 5 TASKS PER STRUCTURE (Increasing Difficulty)
+   GRAMMAR DATA (5 Tasks each, increasing difficulty)
    ============================================================ */
-const GRAMMAR_DATA = {
-  "Question words (Wh-)": [
-    { level: 1, type: "mc", q: "___ is your best friend? - It's Sarah.", opts: ["Who", "Which", "Whose", "Where"], ans: 0 },
-    { level: 2, type: "fib", q: "___ (Wann) does the lesson start tomorrow?", ans: "When" },
-    { level: 3, type: "mc", q: "___ of these two cars is faster?", opts: ["What", "Which", "Whose", "How"], ans: 1 },
-    { level: 4, type: "fib", q: "___ (Wessen) bag is this? It's lying on the floor.", ans: "Whose" },
-    { level: 5, type: "reorder", words: ["does", "How", "often", "she", "go", "gym", "the", "?"], correct: ["How", "often", "does", "she", "go", "to", "the", "gym", "?"] }
+const QUESTION_TEMPLATES = {
+  'Question words (Wh-)': [
+    { type: 'mc', q: '___ is your best friend?', opts: ['Who', 'What', 'Where', 'When'], ans: 0, level: 1 },
+    { type: 'mc', q: '___ do you live? - In London.', opts: ['Why', 'Where', 'How', 'Who'], ans: 1, level: 2 },
+    { type: 'fib', q: '___ is that red car? (Whose/Who/What)', ans: 'Whose', level: 3 },
+    { type: 'mc', q: '___ of these two colors do you prefer, blue or green?', opts: ['What', 'Which', 'Who', 'Where'], ans: 1, level: 4 },
+    { type: 'fib', q: '___ have you been waiting for? (Who/Whom/Whose - formal)', ans: 'Whom', level: 5 }
   ],
-  "Present Perfect": [
-    { level: 1, type: "mc", q: "I ___ my keys. I can't find them!", opts: ["have lost", "lost", "has lost", "am losing"], ans: 0 },
-    { level: 2, type: "fib", q: "She ___ (live) in London for three years now.", ans: "has lived" },
-    { level: 3, type: "mc", q: "Have you ___ been to New York?", opts: ["never", "yet", "ever", "since"], ans: 2 },
-    { level: 4, type: "fib", q: "We haven't seen him ___ (seit) last Tuesday.", ans: "since" },
-    { level: 5, type: "error", sentence: "They have went to the cinema already.", error: "went", correction: "gone" }
+  'Simple Present': [
+    { type: 'mc', q: 'He ___ to school every day.', opts: ['go', 'goes', 'going', 'went'], ans: 1, level: 1 },
+    { type: 'mc', q: '___ they play football on Sundays?', opts: ['Does', 'Do', 'Are', 'Is'], ans: 1, level: 2 },
+    { type: 'fib', q: 'She ___ (not/like) coffee.', ans: "doesn't like", level: 3 },
+    { type: 'mc', q: 'Which sentence is correct?', opts: ['The sun rise in the east.', 'The sun rises in the east.', 'The sun is rise in the east.', 'The sun rised in the east.'], ans: 1, level: 4 },
+    { type: 'fib', q: 'Water ___ (freeze) at 0 degrees Celsius.', ans: 'freezes', level: 5 }
   ],
-  "Passive Voice": [
-    { level: 1, type: "mc", q: "The cake ___ by my grandmother yesterday.", opts: ["was baked", "is baked", "baked", "was baking"], ans: 0 },
-    { level: 2, type: "fib", q: "English ___ (speak) all over the world.", ans: "is spoken" },
-    { level: 3, type: "mc", q: "The letters ___ yet.", opts: ["haven't been sent", "not sent", "won't sent", "are not sent"], ans: 0 },
-    { level: 4, type: "fib", q: "The bridge ___ (build) in 1920.", ans: "was built" },
-    { level: 5, type: "reorder", words: ["being", "The", "is", "cleaned", "room", "now", "."], correct: ["The", "room", "is", "being", "cleaned", "now", "."] }
+  'Present Perfect Simple': [
+    { type: 'mc', q: 'I ___ my keys.', opts: ['have lost', 'has lost', 'lost', 'lose'], ans: 0, level: 1 },
+    { type: 'mc', q: '___ you ever been to Paris?', opts: ['Did', 'Has', 'Have', 'Were'], ans: 2, level: 2 },
+    { type: 'fib', q: 'She ___ (already/eat) lunch.', ans: 'has already eaten', level: 3 },
+    { type: 'mc', q: 'We ___ each other for ten years.', opts: ['know', 'have known', 'have knew', 'knew'], ans: 1, level: 4 },
+    { type: 'fib', q: 'How long ___ (it/be) since you last saw him?', ans: 'has it been', level: 5 }
   ]
 };
 
-let currentState = {
-  name: "",
-  currentStructure: "Question words (Wh-)",
-  questionIdx: 0,
-  score: {},
-  results: [],
-  allAnswers: []
+let currentTest = {
+  name: '',
+  group: 'DEMO1',
+  questions: [],
+  currentIndex: 0,
+  score: 0,
+  resultsPerCategory: {}
 };
+
+// Simulated Database for Teacher View
+let globalResults = JSON.parse(localStorage.getItem('lq_results') || '[]');
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-function startPlacementTest() {
-  const nameInput = document.getElementById('student-name').value;
-  if(!nameInput) return alert("Name bitte!");
-  currentState.name = nameInput;
-  currentState.currentStructure = Object.keys(GRAMMAR_DATA)[0];
-  currentState.questionIdx = 0;
-  currentState.allAnswers = [];
+function joinTest() {
+  const name = document.getElementById('student-name').value;
+  const code = document.getElementById('join-code').value;
+  if(!name || !code) return alert("Bitte Name und Code eingeben!");
+  
+  currentTest.name = name;
+  currentTest.group = code;
+  currentTest.currentIndex = 0;
+  currentTest.score = 0;
+  currentTest.questions = [];
+  currentTest.resultsPerCategory = {};
+
+  // Build test: 5 tasks per structure
+  const selectedStructures = ['Question words (Wh-)', 'Simple Present', 'Present Perfect Simple'];
+  selectedStructures.forEach(cat => {
+    const tasks = QUESTION_TEMPLATES[cat];
+    tasks.forEach(t => {
+      currentTest.questions.push({...t, category: cat});
+    });
+    currentTest.resultsPerCategory[cat] = { correct: 0, total: 5 };
+  });
+
   showScreen('test-screen');
   renderQuestion();
 }
 
 function renderQuestion() {
-  const qData = GRAMMAR_DATA[currentState.currentStructure][currentState.questionIdx];
+  const q = currentTest.questions[currentTest.currentIndex];
   const container = document.getElementById('question-container');
-  const info = document.getElementById('test-info');
-  const progress = document.getElementById('test-progress');
+  const progressText = document.getElementById('test-progress-text');
+  const progressFill = document.getElementById('test-progress-fill');
+  const catTag = document.getElementById('current-grammar-tag');
 
-  const totalQs = Object.keys(GRAMMAR_DATA).length * 5;
-  const currentQNum = (Object.keys(GRAMMAR_DATA).indexOf(currentState.currentStructure) * 5) + currentState.questionIdx + 1;
-  
-  info.innerText = `${currentState.currentStructure} (Level ${qData.level}/5)`;
-  progress.style.width = `${(currentQNum / totalQs) * 100}%`;
+  progressText.textContent = `Aufgabe ${currentTest.currentIndex + 1} von ${currentTest.questions.length}`;
+  progressFill.style.width = `${(currentTest.currentIndex / currentTest.questions.length) * 100}%`;
+  catTag.textContent = q.category.toUpperCase() + ` (Lvl ${q.level})`;
 
-  let html = `<h3 style="margin-bottom:20px;">${qData.q || "Was ist hier richtig?"}</h3>`;
+  let html = `<div class="card" style="width:100%; max-width:500px;">
+    <h3 style="margin-bottom:20px;">${q.q}</h3>`;
 
-  if(qData.type === 'mc') {
-    html += qData.opts.map((o, i) => `<div class="mc-option" onclick="selectMC(${i})" id="mc-${i}">${o}</div>`).join('');
-  } else if(qData.type === 'fib') {
-    html += `<input class="input" id="fib-ans" placeholder="Antwort...">`;
-  } else if(qData.type === 'reorder') {
-    html += `<p style="color:var(--text2); margin-bottom:10px;">Bringe die Wörter in Ordnung:</p>
-             <div class="card" style="background:var(--surface2)">${qData.words.join(' ')}</div>
-             <input class="input" style="margin-top:15px;" id="reorder-ans" placeholder="Satz schreiben...">`;
-  } else if(qData.type === 'error') {
-    html += `<p>${qData.sentence}</p><input class="input" style="margin-top:15px;" id="error-ans" placeholder="Korrektes Wort...">`;
+  if(q.type === 'mc') {
+    html += `<div class="mc-options">`;
+    q.opts.forEach((opt, i) => {
+      html += `<div class="mc-option" onclick="selectMc(${i})" id="opt-${i}">${opt}</div>`;
+    });
+    html += `</div>`;
+  } else {
+    html += `<input type="text" id="fib-ans" class="fib-input" placeholder="Deine Antwort hier...">`;
   }
-
+  
+  html += `</div>`;
   container.innerHTML = html;
-  document.getElementById('next-btn').innerText = "Prüfen";
-  document.getElementById('next-btn').onclick = checkAnswer;
 }
 
-let selectedMc = null;
-function selectMC(i) {
-  selectedMc = i;
+let selectedMcIndex = null;
+function selectMc(i) {
+  selectedMcIndex = i;
   document.querySelectorAll('.mc-option').forEach(el => el.classList.remove('selected'));
-  document.getElementById(`mc-${i}`).classList.add('selected');
+  document.getElementById(`opt-${i}`).classList.add('selected');
 }
 
-function checkAnswer() {
-  const qData = GRAMMAR_DATA[currentState.currentStructure][currentState.questionIdx];
+function submitAnswer() {
+  const q = currentTest.questions[currentTest.currentIndex];
   let isCorrect = false;
 
-  if(qData.type === 'mc') {
-    isCorrect = (selectedMc === qData.ans);
-  } else if(qData.type === 'fib') {
-    isCorrect = (document.getElementById('fib-ans').value.toLowerCase().trim() === qData.ans.toLowerCase());
-  } else if(qData.type === 'reorder') {
-    isCorrect = (document.getElementById('reorder-ans').value.replace(/[.?]/g,'').toLowerCase().trim() === qData.correct.join(' ').replace(/[.?]/g,'').toLowerCase().trim());
-  } else if(qData.type === 'error') {
-    isCorrect = (document.getElementById('error-ans').value.toLowerCase().trim() === qData.correction.toLowerCase());
+  if(q.type === 'mc') {
+    if(selectedMcIndex === null) return alert("Wähle eine Option!");
+    isCorrect = (selectedMcIndex === q.ans);
+    selectedMcIndex = null;
+  } else {
+    const ans = document.getElementById('fib-ans').value.trim().toLowerCase();
+    isCorrect = (ans === q.ans.toLowerCase());
   }
 
-  if(!currentState.score[currentState.currentStructure]) currentState.score[currentState.currentStructure] = 0;
-  if(isCorrect) currentState.score[currentState.currentStructure]++;
+  if(isCorrect) {
+    currentTest.score++;
+    currentTest.resultsPerCategory[q.category].correct++;
+  }
 
-  currentState.allAnswers.push({ structure: currentState.currentStructure, level: qData.level, correct: isCorrect });
-
-  // Nächste Frage Logik
-  currentState.questionIdx++;
-  if(currentState.questionIdx >= 5) {
-    currentState.questionIdx = 0;
-    const structures = Object.keys(GRAMMAR_DATA);
-    const nextIdx = structures.indexOf(currentState.currentStructure) + 1;
-    if(nextIdx < structures.length) {
-      currentState.currentStructure = structures[nextIdx];
-      renderQuestion();
-    } else {
-      finishTest();
-    }
-  } else {
+  currentTest.currentIndex++;
+  if(currentTest.currentIndex < currentTest.questions.length) {
     renderQuestion();
+  } else {
+    finishTest();
   }
 }
 
 function finishTest() {
-  showScreen('results-screen');
-  const content = document.getElementById('results-content');
+  const finalScorePct = Math.round((currentTest.score / currentTest.questions.length) * 100);
+  document.getElementById('score-display').textContent = `${finalScorePct}%`;
   
-  // Berechnung der Empfehlung
-  let recommendations = [];
-  let summaryTextDE = `Hallo ${currentState.name}, vielen Dank für deinen Test. `;
-  let summaryTextEN = `Hello ${currentState.name}, thank you for taking the test. `;
+  // Generate recommendations
+  const recList = document.getElementById('recommendation-list');
+  recList.innerHTML = '';
+  let improvementTextDE = "";
+  let improvementTextEN = "";
 
-  Object.keys(currentState.score).forEach(s => {
-    const val = currentState.score[s];
-    if(val < 3) {
-      recommendations.push(s);
-    }
+  const weakCategories = Object.keys(currentTest.resultsPerCategory).filter(cat => {
+    return currentTest.resultsPerCategory[cat].correct < 4; // Weniger als 80% richtig
   });
 
-  let recHtml = "";
-  if(recommendations.length > 0) {
-    summaryTextDE += "Du hast tolle Ansätze gezeigt. Besonders bei den folgenden Themen kannst du dich noch verbessern:";
-    summaryTextEN += "You showed great effort. You can improve especially in the following areas:";
-    recHtml = `<ul class="recommendation-list">` + recommendations.map(r => `<li><strong>${r}</strong></li>`).join('') + `</ul>`;
+  if(weakCategories.length === 0) {
+    const li = document.createElement('li');
+    li.textContent = "Hervorragend! Du beherrschst alle geprüften Strukturen sicher.";
+    recList.appendChild(li);
+    improvementTextDE = "Hervorragend! Du beherrschst alle geprüften Strukturen sicher. Mach weiter so!";
+    improvementTextEN = "Excellent! You have mastered all tested structures. Keep it up!";
   } else {
-    summaryTextDE += "Hervorragend! Du beherrschst alle getesteten Strukturen sicher.";
-    summaryTextEN += "Excellent! You have a solid grasp of all tested structures.";
-    recHtml = "<p>Keine spezifischen Wiederholungen nötig. Well done!</p>";
+    weakCategories.forEach(cat => {
+      const li = document.createElement('li');
+      li.textContent = `Vertiefe dein Wissen im Bereich: ${cat}`;
+      recList.appendChild(li);
+    });
+    improvementTextDE = "Gute Arbeit! Um noch besser zu werden, solltest du dich besonders auf folgende Bereiche konzentrieren: " + weakCategories.join(", ") + ".";
+    improvementTextEN = "Good job! To improve further, you should focus especially on: " + weakCategories.join(", ") + ".";
   }
 
-  content.innerHTML = `
-    <h2 style="font-family:var(--font-head); color:var(--neon2)">Dein Ergebnis</h2>
-    <p style="margin:20px 0;">Hier ist deine individuelle Auswertung:</p>
-    <div style="background:var(--surface2); padding:20px; border-radius:10px;">
-      <p id="rec-text-de">${summaryTextDE}</p>
-      ${recHtml}
-    </div>
-    <div class="audio-controls">
-      <button class="btn btn-secondary" onclick="speak('de')">Listen (DE) 🇩🇪</button>
-      <button class="btn btn-secondary" onclick="speak('en')">Listen (EN) 🇺🇸</button>
-    </div>
-    <button class="btn btn-primary" style="margin-top:30px;" onclick="location.reload()">Zur Startseite</button>
-  `;
+  // Save to global results for teacher
+  const resultEntry = {
+    name: currentTest.name,
+    group: currentTest.group,
+    score: finalScorePct,
+    recDE: improvementTextDE,
+    recEN: improvementTextEN
+  };
+  globalResults.push(resultEntry);
+  localStorage.setItem('lq_results', JSON.stringify(globalResults));
 
-  // Daten für Lehrer speichern
-  saveToTeacher(summaryTextDE);
+  window.currentRecommendations = { de: improvementTextDE, en: improvementTextEN };
+  showScreen('results-screen');
 }
 
-function speak(lang) {
-  const text = document.getElementById('rec-text-de').innerText; // Vereinfacht für Demo
+function renderGroups() {
+  const body = document.getElementById('teacher-results-body');
+  body.innerHTML = globalResults.map(r => `
+    <tr>
+      <td><strong>${r.name}</strong></td>
+      <td>${r.group}</td>
+      <td><span style="color:${r.score > 70 ? 'var(--green)' : 'var(--yellow)'}">${r.score}%</span></td>
+      <td style="font-size:0.8rem; color:var(--text2)">${r.recDE}</td>
+    </tr>
+  `).join('');
+}
+
+function speakRecommendation(lang) {
+  const text = lang === 'de' ? window.currentRecommendations.de : window.currentRecommendations.en;
   const msg = new SpeechSynthesisUtterance();
   msg.text = text;
   msg.lang = lang === 'de' ? 'de-DE' : 'en-US';
+  msg.rate = 0.9;
+  window.speechSynthesis.cancel();
   window.speechSynthesis.speak(msg);
-}
-
-function saveToTeacher(summary) {
-  let db = JSON.parse(localStorage.getItem('linguaResults') || '[]');
-  const totalCorrect = Object.values(currentState.score).reduce((a, b) => a + b, 0);
-  db.push({
-    name: currentState.name,
-    score: `${totalCorrect} / ${Object.keys(GRAMMAR_DATA).length * 5}`,
-    details: currentState.score,
-    date: new Date().toLocaleString()
-  });
-  localStorage.setItem('linguaResults', JSON.stringify(db));
-}
-
-function teacherInit() {
-  const db = JSON.parse(localStorage.getItem('linguaResults') || '[]');
-  const container = document.getElementById('teacher-results-container');
-  
-  if(db.length === 0) {
-    container.innerHTML = "<p>Noch keine Teilnehmer.</p>";
-    return;
-  }
-
-  let html = `<table class="results-table">
-    <tr><th>Datum</th><th>Name</th><th>Gesamtscore</th><th>Details</th></tr>`;
-  
-  db.forEach(entry => {
-    let details = Object.entries(entry.details).map(([k,v]) => `${k}: ${v}/5`).join(', ');
-    html += `<tr>
-      <td>${entry.date}</td>
-      <td><strong>${entry.name}</strong></td>
-      <td>${entry.score}</td>
-      <td style="color:var(--text2); font-size:0.8rem;">${details}</td>
-    </tr>`;
-  });
-  html += `</table>`;
-  container.innerHTML = html;
 }
 </script>
 </body>
