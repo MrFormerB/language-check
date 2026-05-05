@@ -3,2363 +3,333 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LinguaQuest – Sprachniveau-Test</title>
+<title>LinguaQuest – Professional Language Placement</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   TOKENS & RESET
-   ============================================================ */
+/* (Stile bleiben weitgehend gleich, Ergänzungen für Audio-Buttons und Feedback) */
 :root {
-  --bg: #0a0a0f;
-  --surface: #13131c;
-  --surface2: #1c1c2a;
-  --surface3: #252538;
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.13);
-
-  --neon: #7c3aed;
-  --neon2: #a855f7;
-  --neon-glow: rgba(124,58,237,0.35);
-  --cyan: #06b6d4;
-  --cyan-glow: rgba(6,182,212,0.3);
-  --green: #10b981;
-  --green-glow: rgba(16,185,129,0.3);
-  --yellow: #f59e0b;
-  --yellow-glow: rgba(245,158,11,0.3);
-  --red: #ef4444;
-  --red-glow: rgba(239,68,68,0.3);
-  --pink: #ec4899;
-
-  --text: #f1f0ff;
-  --text2: rgba(241,240,255,0.55);
-  --text3: rgba(241,240,255,0.3);
-
-  --r-sm: 10px;
-  --r-md: 16px;
-  --r-lg: 24px;
-  --r-xl: 32px;
-
-  --font-head: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-
-  /* Level colors */
-  --a2: #06b6d4;
-  --b1: #10b981;
-  --b2: #f59e0b;
-  --c1: #ec4899;
+  --bg: #0a0a0f; --surface: #13131c; --surface2: #1c1c2a; --surface3: #252538;
+  --border: rgba(255,255,255,0.07); --neon: #7c3aed; --neon2: #a855f7;
+  --cyan: #06b6d4; --green: #10b981; --yellow: #f59e0b; --red: #ef4444;
+  --text: #f1f0ff; --text2: rgba(241,240,255,0.55);
+  --font-head: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
+  --r-md: 16px; --r-lg: 24px;
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-  line-height: 1.6;
-}
-
-/* ============================================================
-   BACKGROUND EFFECTS
-   ============================================================ */
-.bg-grid {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background-image:
-    linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
-.bg-orb {
-  position: fixed; border-radius: 50%; pointer-events: none; filter: blur(90px); z-index: 0;
-}
-.bg-orb-1 { width: 600px; height: 600px; background: rgba(124,58,237,0.12); top: -200px; right: -200px; }
-.bg-orb-2 { width: 400px; height: 400px; background: rgba(6,182,212,0.08); bottom: -100px; left: -100px; }
-.bg-orb-3 { width: 300px; height: 300px; background: rgba(236,72,153,0.07); top: 50%; left: 40%; }
-
-/* ============================================================
-   LAYOUT
-   ============================================================ */
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+.bg-grid { position: fixed; inset: 0; z-index: 0; background-image: linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px); background-size: 60px 60px; }
 #app { position: relative; z-index: 1; }
-
 .screen { display: none; min-height: 100vh; }
 .screen.active { display: flex; flex-direction: column; }
-
-/* ============================================================
-   COMPONENTS
-   ============================================================ */
-
-/* --- Buttons --- */
-.btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 12px 24px;
-  border: none; border-radius: var(--r-sm);
-  font-family: var(--font-body); font-size: 0.95rem; font-weight: 600;
-  cursor: pointer; transition: all 0.2s; text-decoration: none;
-  white-space: nowrap;
-}
-.btn-primary {
-  background: linear-gradient(135deg, var(--neon), var(--neon2));
-  color: white;
-  box-shadow: 0 0 24px var(--neon-glow);
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 36px var(--neon-glow); }
-.btn-secondary {
-  background: var(--surface2);
-  color: var(--text);
-  border: 1px solid var(--border2);
-}
-.btn-secondary:hover { background: var(--surface3); border-color: rgba(255,255,255,0.2); }
-.btn-cyan {
-  background: linear-gradient(135deg, #0891b2, var(--cyan));
-  color: white; box-shadow: 0 0 20px var(--cyan-glow);
-}
-.btn-cyan:hover { transform: translateY(-2px); box-shadow: 0 0 32px var(--cyan-glow); }
-.btn-green {
-  background: linear-gradient(135deg, #059669, var(--green));
-  color: white; box-shadow: 0 0 20px var(--green-glow);
-}
-.btn-green:hover { transform: translateY(-2px); }
-.btn-sm { padding: 8px 16px; font-size: 0.82rem; }
-.btn-lg { padding: 16px 36px; font-size: 1.1rem; border-radius: var(--r-md); }
-.btn-ghost {
-  background: transparent; color: var(--text2);
-  border: 1px solid var(--border);
-}
-.btn-ghost:hover { border-color: var(--border2); color: var(--text); background: var(--surface2); }
-.btn-danger { background: linear-gradient(135deg, #b91c1c, var(--red)); color: white; }
-.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
-
-/* --- Cards --- */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 28px;
-}
-.card-glow {
-  background: var(--surface);
-  border: 1px solid rgba(124,58,237,0.25);
-  border-radius: var(--r-lg);
-  padding: 28px;
-  box-shadow: 0 0 40px rgba(124,58,237,0.08);
-}
-
-/* --- Inputs --- */
-.input {
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  border-radius: var(--r-sm);
-  color: var(--text); font-family: var(--font-body); font-size: 0.95rem;
-  padding: 12px 16px; width: 100%; outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.input:focus { border-color: var(--neon); box-shadow: 0 0 16px var(--neon-glow); }
-.input::placeholder { color: var(--text3); }
-
-select.input { cursor: pointer; }
-select.input option { background: var(--surface2); }
-
-.form-group { display: flex; flex-direction: column; gap: 8px; }
-.form-label { font-size: 0.82rem; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; }
-
-/* --- Badges --- */
-.badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 4px 12px; border-radius: 20px;
-  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-}
-.badge-a2 { background: rgba(6,182,212,0.15); color: var(--a2); border: 1px solid rgba(6,182,212,0.3); }
-.badge-b1 { background: rgba(16,185,129,0.15); color: var(--b1); border: 1px solid rgba(16,185,129,0.3); }
-.badge-b2 { background: rgba(245,158,11,0.15); color: var(--b2); border: 1px solid rgba(245,158,11,0.3); }
-.badge-c1 { background: rgba(236,72,153,0.15); color: var(--c1); border: 1px solid rgba(236,72,153,0.3); }
-.badge-neon { background: rgba(124,58,237,0.15); color: var(--neon2); border: 1px solid rgba(124,58,237,0.3); }
-
-/* --- Tags --- */
-.tag {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 12px; border-radius: 6px;
-  font-size: 0.82rem; font-weight: 500;
-  background: var(--surface2); border: 1px solid var(--border2);
-  cursor: pointer; transition: all 0.15s;
-}
-.tag:hover { border-color: var(--neon); color: var(--neon2); }
-.tag.selected { background: rgba(124,58,237,0.2); border-color: var(--neon); color: var(--neon2); }
-.tag-remove { cursor: pointer; opacity: 0.5; transition: opacity 0.15s; }
-.tag-remove:hover { opacity: 1; color: var(--red); }
-
-/* --- Progress --- */
-.progress-bar {
-  height: 6px; background: var(--surface3); border-radius: 99px; overflow: hidden;
-}
-.progress-fill {
-  height: 100%; border-radius: 99px;
-  background: linear-gradient(90deg, var(--neon), var(--cyan));
-  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 0 10px var(--neon-glow);
-}
-
-/* --- Toast --- */
-.toast-container {
-  position: fixed; top: 20px; right: 20px; z-index: 9999;
-  display: flex; flex-direction: column; gap: 10px;
-}
-.toast {
-  background: var(--surface2); border: 1px solid var(--border2);
-  border-radius: var(--r-sm); padding: 14px 20px;
-  display: flex; align-items: center; gap: 12px;
-  min-width: 280px; max-width: 400px;
-  animation: toast-in 0.3s ease, toast-out 0.3s ease 2.7s forwards;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  font-size: 0.9rem;
-}
-.toast.success { border-color: rgba(16,185,129,0.4); }
-.toast.error { border-color: rgba(239,68,68,0.4); }
-
-@keyframes toast-in { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-@keyframes toast-out { to { opacity: 0; transform: translateX(20px); } }
-
-/* --- Tooltip --- */
-.tooltip { position: relative; }
-.tooltip-text {
-  visibility: hidden; opacity: 0;
-  position: absolute; bottom: calc(100% + 8px); left: 50%;
-  transform: translateX(-50%);
-  background: var(--surface3); border: 1px solid var(--border2);
-  border-radius: 6px; padding: 6px 12px;
-  font-size: 0.78rem; white-space: nowrap; color: var(--text2);
-  transition: opacity 0.2s; pointer-events: none; z-index: 100;
-}
-.tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
-
-/* --- Modal --- */
-.modal-overlay {
-  position: fixed; inset: 0; z-index: 500;
-  background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
-  display: flex; align-items: center; justify-content: center;
-  padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.2s;
-}
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal {
-  background: var(--surface); border: 1px solid var(--border2);
-  border-radius: var(--r-xl); padding: 36px;
-  max-width: 560px; width: 100%;
-  transform: scale(0.95); transition: transform 0.2s;
-  max-height: 90vh; overflow-y: auto;
-}
-.modal-overlay.open .modal { transform: scale(1); }
-
-/* ============================================================
-   NAVIGATION BAR
-   ============================================================ */
-.nav {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 32px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(10,10,15,0.8);
-  backdrop-filter: blur(12px);
-  position: sticky; top: 0; z-index: 100;
-  flex-shrink: 0;
-}
-.nav-logo {
-  font-family: var(--font-head); font-size: 1.4rem; font-weight: 800;
-  background: linear-gradient(135deg, var(--neon2), var(--cyan));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.nav-logo span { color: var(--text2); -webkit-text-fill-color: var(--text2); }
-.nav-right { display: flex; align-items: center; gap: 12px; }
-.nav-user {
-  display: flex; align-items: center; gap: 10px;
-  background: var(--surface2); border: 1px solid var(--border2);
-  border-radius: 99px; padding: 6px 16px 6px 6px;
-  font-size: 0.88rem;
-}
-.nav-avatar {
-  width: 32px; height: 32px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--neon), var(--cyan));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.75rem; font-weight: 700; color: white;
-}
-
-/* ============================================================
-   LANDING / HOME SCREEN
-   ============================================================ */
-#landing-screen {
-  align-items: center; justify-content: center;
-  padding: 40px 20px;
-}
-
-.landing-hero { text-align: center; max-width: 700px; }
-
-.hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 6px 16px; border-radius: 99px;
-  background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.25);
-  font-size: 0.82rem; font-weight: 600; color: var(--neon2);
-  margin-bottom: 28px; letter-spacing: 0.05em;
-}
-.hero-eyebrow-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--neon2);
-  animation: pulse-dot 2s infinite;
-}
-@keyframes pulse-dot {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.7); }
-}
-
-.hero-title {
-  font-family: var(--font-head); font-size: clamp(2.8rem, 6vw, 5rem);
-  font-weight: 800; line-height: 1.05; margin-bottom: 20px;
-  letter-spacing: -0.03em;
-}
-.hero-title .gradient {
-  background: linear-gradient(135deg, var(--neon2), var(--cyan), var(--green));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-
-.hero-desc {
-  font-size: 1.1rem; color: var(--text2); margin-bottom: 40px; line-height: 1.8;
-}
-
-.hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; }
-
-.level-cards {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
-  max-width: 700px; margin: 0 auto;
-}
-.level-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--r-md); padding: 20px 16px;
-  text-align: center; transition: all 0.25s; cursor: default;
-  position: relative; overflow: hidden;
-}
-.level-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-}
-.level-card-a2::before { background: var(--a2); }
-.level-card-b1::before { background: var(--b1); }
-.level-card-b2::before { background: var(--b2); }
-.level-card-c1::before { background: var(--c1); }
-.level-card:hover { transform: translateY(-4px); border-color: var(--border2); }
-.level-card-icon { font-size: 1.8rem; margin-bottom: 8px; }
-.level-card-name {
-  font-family: var(--font-head); font-size: 1.3rem; font-weight: 800; margin-bottom: 4px;
-}
-.level-card-desc { font-size: 0.75rem; color: var(--text3); }
-
-/* ============================================================
-   TEACHER DASHBOARD
-   ============================================================ */
-#teacher-screen {
-  flex-direction: column;
-}
-
-.teacher-layout {
-  display: grid; grid-template-columns: 260px 1fr;
-  flex: 1; min-height: 0;
-}
-
-.sidebar {
-  background: var(--surface); border-right: 1px solid var(--border);
-  padding: 24px 16px; display: flex; flex-direction: column; gap: 6px;
-  overflow-y: auto;
-}
-.sidebar-title {
-  font-size: 0.72rem; font-weight: 700; color: var(--text3);
-  text-transform: uppercase; letter-spacing: 0.1em;
-  padding: 8px 12px 4px;
-}
-.sidebar-btn {
-  display: flex; align-items: center; gap: 10px;
-  padding: 11px 14px; border-radius: var(--r-sm);
-  background: none; border: none; color: var(--text2);
-  font-family: var(--font-body); font-size: 0.9rem;
-  cursor: pointer; transition: all 0.15s; text-align: left; width: 100%;
-}
-.sidebar-btn:hover { background: var(--surface2); color: var(--text); }
-.sidebar-btn.active { background: rgba(124,58,237,0.15); color: var(--neon2); border: 1px solid rgba(124,58,237,0.2); }
-.sidebar-btn-icon { font-size: 1rem; flex-shrink: 0; }
-.sidebar-sep { height: 1px; background: var(--border); margin: 8px 0; }
-
-.main-panel {
-  padding: 32px; overflow-y: auto; flex: 1;
-}
-.panel-header {
-  display: flex; align-items: flex-start; justify-content: space-between;
-  margin-bottom: 28px; gap: 16px; flex-wrap: wrap;
-}
-.panel-title { font-family: var(--font-head); font-size: 1.8rem; font-weight: 800; }
-.panel-subtitle { color: var(--text2); font-size: 0.92rem; margin-top: 4px; }
-
-/* Groups Grid */
-.groups-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;
-}
-
-.group-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--r-lg); padding: 24px;
-  transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden;
-}
-.group-card::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(124,58,237,0.05), transparent);
-  opacity: 0; transition: opacity 0.2s;
-}
-.group-card:hover { border-color: rgba(124,58,237,0.3); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-.group-card:hover::after { opacity: 1; }
-.group-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
-.group-card-icon {
-  width: 48px; height: 48px; border-radius: 12px;
-  background: linear-gradient(135deg, var(--neon), var(--neon2));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.4rem;
-}
-.group-card-actions { display: flex; gap: 6px; }
-.group-card-name { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
-.group-card-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-.group-card-stats { display: flex; gap: 20px; }
-.stat { display: flex; flex-direction: column; gap: 2px; }
-.stat-val { font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; color: var(--neon2); }
-.stat-label { font-size: 0.72rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; }
-
-/* Create Group Form */
-.create-group-form {
-  max-width: 680px;
-}
-.section-divider {
-  display: flex; align-items: center; gap: 16px; margin: 28px 0;
-}
-.section-divider-line { flex: 1; height: 1px; background: var(--border); }
-.section-divider-text { font-size: 0.78rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; white-space: nowrap; }
-
-/* Grammar structures */
-.grammar-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;
-}
-.grammar-item {
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 8px; padding: 10px 14px;
-  cursor: pointer; transition: all 0.15s;
-  display: flex; align-items: center; gap: 8px;
-  font-size: 0.88rem;
-}
-.grammar-item:hover { border-color: var(--neon); }
-.grammar-item.selected { background: rgba(124,58,237,0.15); border-color: var(--neon); color: var(--neon2); }
-.grammar-check { width: 18px; height: 18px; border-radius: 5px; border: 2px solid var(--border2); flex-shrink: 0; transition: all 0.15s; display: flex; align-items: center; justify-content: center; font-size: 11px; }
-.grammar-item.selected .grammar-check { background: var(--neon); border-color: var(--neon); }
-
-/* Sortable order list */
-.order-list { display: flex; flex-direction: column; gap: 8px; }
-.order-item {
-  display: flex; align-items: center; gap: 12px;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 8px; padding: 10px 14px;
-  cursor: grab; transition: all 0.15s; user-select: none;
-  font-size: 0.88rem;
-}
-.order-item:active { cursor: grabbing; }
-.order-item.dragging { opacity: 0.5; border-style: dashed; border-color: var(--neon); }
-.order-item.drag-over { border-color: var(--cyan); background: rgba(6,182,212,0.08); }
-.order-handle { color: var(--text3); font-size: 1rem; flex-shrink: 0; }
-.order-num {
-  width: 24px; height: 24px; border-radius: 50%;
-  background: rgba(124,58,237,0.2); color: var(--neon2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
-}
-
-/* Students Results Table */
-.results-table { width: 100%; border-collapse: collapse; }
-.results-table th {
-  text-align: left; padding: 12px 16px;
-  font-size: 0.75rem; font-weight: 700; color: var(--text3);
-  text-transform: uppercase; letter-spacing: 0.08em;
-  border-bottom: 1px solid var(--border);
-}
-.results-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
-.results-table tr:last-child td { border-bottom: none; }
-.results-table tr:hover td { background: rgba(255,255,255,0.02); }
-
-.score-ring {
-  width: 44px; height: 44px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-head); font-size: 0.85rem; font-weight: 800;
-  border: 2px solid;
-}
-
-/* ============================================================
-   STUDENT JOIN SCREEN
-   ============================================================ */
-#student-join-screen {
-  align-items: center; justify-content: center; padding: 40px 20px;
-}
-.join-card {
-  background: var(--surface); border: 1px solid var(--border2);
-  border-radius: var(--r-xl); padding: 48px 40px;
-  max-width: 480px; width: 100%; text-align: center;
-}
-.join-title { font-family: var(--font-head); font-size: 2rem; font-weight: 800; margin-bottom: 10px; }
-.join-subtitle { color: var(--text2); margin-bottom: 36px; }
-.join-code-input {
-  text-align: center; font-size: 2rem; font-family: var(--font-head); font-weight: 800;
-  letter-spacing: 0.2em; text-transform: uppercase;
-}
-
-/* ============================================================
-   TEST SCREEN
-   ============================================================ */
-#test-screen { flex-direction: column; }
-
-.test-header {
-  background: rgba(10,10,15,0.9); backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 16px 32px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: space-between; gap: 20px;
-}
-.test-header-info { display: flex; flex-direction: column; gap: 2px; }
-.test-task-name { font-family: var(--font-head); font-size: 1rem; font-weight: 700; }
-.test-progress-text { font-size: 0.8rem; color: var(--text3); }
-.test-header-right { display: flex; align-items: center; gap: 16px; }
-
-.test-body {
-  flex: 1; display: flex; align-items: center; justify-content: center;
-  padding: 32px 20px; overflow-y: auto;
-}
-
-.question-container {
-  max-width: 780px; width: 100%;
-  animation: q-in 0.4s ease;
-}
-@keyframes q-in {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.question-type-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 5px 14px; border-radius: 99px;
-  background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.2);
-  font-size: 0.75rem; font-weight: 700; color: var(--neon2); margin-bottom: 20px;
-  letter-spacing: 0.05em; text-transform: uppercase;
-}
-
-.question-text {
-  font-family: var(--font-head); font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-  font-weight: 700; margin-bottom: 30px; line-height: 1.4;
-}
-.question-text .blank {
-  display: inline-block; min-width: 100px; height: 3px;
-  background: linear-gradient(90deg, var(--neon), var(--cyan));
-  border-radius: 2px; margin: 0 6px; vertical-align: middle;
-}
-
-/* Multiple choice */
-.mc-options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.mc-option {
-  background: var(--surface2); border: 2px solid var(--border);
-  border-radius: var(--r-md); padding: 18px 22px;
-  cursor: pointer; transition: all 0.2s;
-  display: flex; align-items: center; gap: 14px;
-  font-size: 0.97rem;
-}
-.mc-option:hover { border-color: var(--neon); background: rgba(124,58,237,0.08); }
-.mc-option.selected { border-color: var(--neon); background: rgba(124,58,237,0.15); }
-.mc-option.correct { border-color: var(--green); background: rgba(16,185,129,0.12); }
-.mc-option.wrong { border-color: var(--red); background: rgba(239,68,68,0.1); }
-.mc-letter {
-  width: 32px; height: 32px; border-radius: 8px;
-  background: var(--surface3); border: 1px solid var(--border2);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-head); font-size: 0.85rem; font-weight: 800;
-  flex-shrink: 0; transition: all 0.2s;
-}
-.mc-option.selected .mc-letter { background: var(--neon); border-color: var(--neon); color: white; }
-.mc-option.correct .mc-letter { background: var(--green); border-color: var(--green); color: white; }
-.mc-option.wrong .mc-letter { background: var(--red); border-color: var(--red); color: white; }
-
-/* Fill in the blank */
-.fib-container {
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--r-lg); padding: 28px; margin-bottom: 20px;
-  font-size: 1.05rem; line-height: 2.4;
-}
-.fib-input {
-  display: inline-block; min-width: 120px;
-  background: var(--surface3); border: 2px solid var(--border2);
-  border-radius: 6px; padding: 2px 10px;
-  font-family: var(--font-body); font-size: 1rem; font-weight: 600;
-  color: var(--text); outline: none; vertical-align: middle;
-  transition: border-color 0.2s;
-}
-.fib-input:focus { border-color: var(--neon); }
-.fib-input.correct { border-color: var(--green); color: var(--green); }
-.fib-input.wrong { border-color: var(--red); color: var(--red); }
-
-/* Drag & Drop */
-.dnd-sentence {
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--r-lg); padding: 28px; margin-bottom: 24px;
-  font-size: 1.05rem; line-height: 2.6; text-align: center;
-  min-height: 80px;
-}
-.drop-zone {
-  display: inline-block; min-width: 100px; height: 36px;
-  border-radius: 8px; border: 2px dashed var(--border2);
-  background: var(--surface3); vertical-align: middle;
-  margin: 0 6px; padding: 0 10px;
-  transition: all 0.2s; text-align: center; line-height: 32px;
-  font-weight: 600; color: var(--text3); font-size: 0.9rem;
-}
-.drop-zone.drag-over { border-color: var(--neon); background: rgba(124,58,237,0.1); color: var(--neon2); }
-.drop-zone.filled { border-color: rgba(255,255,255,0.2); background: var(--surface3); color: var(--text); border-style: solid; }
-.drop-zone.correct { border-color: var(--green); background: rgba(16,185,129,0.1); color: var(--green); }
-.drop-zone.wrong { border-color: var(--red); background: rgba(239,68,68,0.08); color: var(--red); }
-
-.drag-words {
-  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
-}
-.drag-word {
-  background: var(--surface2); border: 1px solid var(--border2);
-  border-radius: 8px; padding: 8px 16px;
-  cursor: grab; transition: all 0.2s;
-  font-size: 0.95rem; font-weight: 500;
-  user-select: none;
-}
-.drag-word:hover { border-color: var(--neon); color: var(--neon2); transform: translateY(-2px); }
-.drag-word.dragging { opacity: 0.4; cursor: grabbing; }
-.drag-word.used { opacity: 0.3; pointer-events: none; }
-
-/* Matching */
-.matching-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.match-col { display: flex; flex-direction: column; gap: 10px; }
-.match-col-title { font-size: 0.78rem; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
-.match-item {
-  background: var(--surface2); border: 2px solid var(--border);
-  border-radius: var(--r-sm); padding: 14px 16px;
-  cursor: pointer; transition: all 0.2s; font-size: 0.92rem;
-  min-height: 52px; display: flex; align-items: center;
-}
-.match-item:hover { border-color: var(--neon); }
-.match-item.selected { border-color: var(--neon); background: rgba(124,58,237,0.12); }
-.match-item.matched { border-color: var(--green); background: rgba(16,185,129,0.1); }
-.match-item.wrong-match { border-color: var(--red); background: rgba(239,68,68,0.08); animation: shake 0.4s; }
-.match-item.match-target { cursor: default; }
-.match-item.match-target.matched-to { border-style: dashed; opacity: 0.5; }
-
-@keyframes shake {
-  0%,100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
-}
-
-/* Error correction */
-.error-sentence {
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--r-lg); padding: 24px;
-  font-size: 1.08rem; line-height: 2;
-  margin-bottom: 20px;
-}
-.error-word {
-  display: inline-block; padding: 2px 8px;
-  border-radius: 4px; cursor: pointer;
-  border: 1px solid transparent;
-  transition: all 0.15s;
-}
-.error-word:hover { background: rgba(245,158,11,0.1); border-color: var(--yellow); }
-.error-word.selected-error { background: rgba(239,68,68,0.12); border-color: var(--red); color: var(--red); }
-.error-word.correct-error { background: rgba(16,185,129,0.1); border-color: var(--green); color: var(--green); }
-
-/* Reorder sentence */
-.reorder-words { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; min-height: 52px; padding: 12px; border-radius: var(--r-md); background: var(--surface2); border: 2px dashed var(--border2); margin-bottom: 20px; }
-.reorder-target { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; min-height: 52px; padding: 12px; border-radius: var(--r-md); background: rgba(124,58,237,0.05); border: 2px dashed rgba(124,58,237,0.2); }
-.reorder-word {
-  background: var(--surface3); border: 1px solid var(--border2);
-  border-radius: 8px; padding: 8px 14px;
-  cursor: pointer; transition: all 0.2s; font-size: 0.92rem;
-}
-.reorder-word:hover { border-color: var(--neon); color: var(--neon2); transform: translateY(-2px); }
-.reorder-word.placed { background: rgba(124,58,237,0.15); border-color: var(--neon); color: var(--neon2); }
-
-/* Feedback flash */
-.feedback-flash {
-  display: flex; align-items: center; justify-content: center; gap: 12px;
-  padding: 14px 24px; border-radius: var(--r-md);
-  font-size: 1rem; font-weight: 600; margin-top: 16px;
-}
-.feedback-flash.correct { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); color: var(--green); }
-.feedback-flash.wrong { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); color: var(--red); }
-
-/* Navigation buttons */
-.question-nav {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-top: 28px; flex-wrap: wrap; gap: 12px;
-}
-
-/* XP Bar */
-.xp-bar-container {
-  display: flex; align-items: center; gap: 10px;
-  flex: 1; max-width: 200px;
-}
-.xp-label { font-size: 0.75rem; font-weight: 700; color: var(--neon2); }
-
-/* Streak */
-.streak-badge {
-  display: flex; align-items: center; gap: 6px;
-  padding: 6px 12px; border-radius: 99px;
-  background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.3);
-  font-size: 0.8rem; font-weight: 700; color: var(--yellow);
-}
-
-/* Timer */
-.timer-display {
-  display: flex; align-items: center; gap: 8px;
-  font-family: var(--font-head); font-size: 1rem; font-weight: 700;
-}
-.timer-display.warning { color: var(--yellow); }
-.timer-display.danger { color: var(--red); animation: pulse-timer 0.5s infinite; }
-@keyframes pulse-timer { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
-
-/* ============================================================
-   RESULTS SCREEN
-   ============================================================ */
-#results-screen { align-items: center; justify-content: flex-start; padding: 40px 20px; }
-
-.results-card {
-  max-width: 860px; width: 100%;
-  background: var(--surface); border: 1px solid var(--border2);
-  border-radius: var(--r-xl); overflow: hidden;
-  margin: 0 auto;
-}
-.results-hero {
-  background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(6,182,212,0.1));
-  border-bottom: 1px solid var(--border);
-  padding: 40px; text-align: center;
-  position: relative; overflow: hidden;
-}
-.results-hero::before {
-  content: ''; position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%237c3aed' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-.results-level-badge {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: rgba(0,0,0,0.3); border: 1px solid var(--border2);
-  border-radius: 99px; padding: 8px 24px;
-  margin-bottom: 20px; font-size: 0.88rem; color: var(--text2);
-}
-.results-level-name {
-  font-family: var(--font-head); font-size: 3rem; font-weight: 800;
-  background: linear-gradient(135deg, var(--neon2), var(--cyan));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text; margin-bottom: 8px;
-}
-.results-student-name { font-size: 1.3rem; font-weight: 600; color: var(--text2); margin-bottom: 28px; }
-
-.results-stats {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 16px; margin-bottom: 0;
-}
-.result-stat {
-  background: rgba(0,0,0,0.25); border: 1px solid var(--border);
-  border-radius: var(--r-md); padding: 20px; text-align: center;
-}
-.result-stat-val {
-  font-family: var(--font-head); font-size: 2rem; font-weight: 800;
-  background: linear-gradient(135deg, var(--neon2), var(--cyan));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.result-stat-label { font-size: 0.78rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
-
-.results-body { padding: 36px; }
-
-.results-section-title {
-  font-family: var(--font-head); font-size: 1.1rem; font-weight: 700;
-  margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
-}
-
-.skill-bars { display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
-.skill-bar { display: flex; flex-direction: column; gap: 6px; }
-.skill-bar-header { display: flex; justify-content: space-between; font-size: 0.88rem; }
-.skill-bar-name { font-weight: 600; }
-.skill-bar-pct { color: var(--text2); }
-
-.review-list { display: flex; flex-direction: column; gap: 14px; }
-.review-item {
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--r-md); padding: 18px 20px;
-  display: flex; gap: 16px; align-items: flex-start;
-}
-.review-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
-.review-content { flex: 1; }
-.review-q { font-size: 0.88rem; color: var(--text2); margin-bottom: 6px; }
-.review-your { font-size: 0.92rem; margin-bottom: 4px; }
-.review-correct { font-size: 0.88rem; color: var(--green); }
-.review-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; }
-.review-badge-correct { background: rgba(16,185,129,0.15); color: var(--green); }
-.review-badge-wrong { background: rgba(239,68,68,0.12); color: var(--red); }
-
-/* ============================================================
-   GAMIFICATION ELEMENTS
-   ============================================================ */
-.xp-popup {
-  position: fixed; pointer-events: none; z-index: 9000;
-  font-family: var(--font-head); font-size: 1.3rem; font-weight: 800;
-  color: var(--yellow);
-  animation: xp-float 1.2s ease-out forwards;
-  text-shadow: 0 0 12px var(--yellow-glow);
-}
-@keyframes xp-float {
-  from { opacity: 1; transform: translateY(0) scale(1); }
-  to { opacity: 0; transform: translateY(-60px) scale(1.2); }
-}
-
-.level-up-overlay {
-  position: fixed; inset: 0; z-index: 8000;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
-  animation: fade-in 0.3s;
-}
-.level-up-card {
-  background: var(--surface); border: 1px solid rgba(245,158,11,0.5);
-  border-radius: var(--r-xl); padding: 48px;
-  text-align: center; box-shadow: 0 0 60px rgba(245,158,11,0.2);
-  animation: pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-@keyframes pop-in { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-.level-up-icon { font-size: 4rem; margin-bottom: 16px; }
-.level-up-title { font-family: var(--font-head); font-size: 2rem; font-weight: 800; color: var(--yellow); margin-bottom: 8px; }
-
-/* ============================================================
-   CONFETTI
-   ============================================================ */
-.confetti-piece {
-  position: fixed; pointer-events: none; z-index: 7000;
-  width: 8px; height: 8px; border-radius: 2px;
-  animation: confetti-fall linear forwards;
-}
-@keyframes confetti-fall {
-  to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-}
-
-/* ============================================================
-   MISC
-   ============================================================ */
-.empty-state {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 60px 20px; text-align: center; gap: 12px;
-  color: var(--text3);
-}
-.empty-icon { font-size: 3rem; margin-bottom: 8px; }
-.empty-title { font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; color: var(--text2); }
-
-.tab-bar {
-  display: flex; gap: 4px;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--r-sm); padding: 4px;
-}
-.tab-bar-btn {
-  flex: 1; padding: 8px 16px; border: none; border-radius: 7px;
-  background: none; color: var(--text2); font-family: var(--font-body);
-  font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
-}
-.tab-bar-btn.active { background: var(--surface3); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
-
-.color-divider { height: 3px; width: 40px; border-radius: 2px; }
-
-/* scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--border2); }
-
-/* Responsive */
-@media (max-width: 768px) {
-  .teacher-layout { grid-template-columns: 1fr; }
-  .sidebar { display: none; }
-  .mc-options { grid-template-columns: 1fr; }
-  .matching-grid { grid-template-columns: 1fr; }
-  .level-cards { grid-template-columns: 1fr 1fr; }
-  .results-stats { grid-template-columns: 1fr; }
-  .main-panel { padding: 20px; }
-  .nav { padding: 12px 20px; }
-}
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s; text-decoration: none; }
+.btn-primary { background: linear-gradient(135deg, var(--neon), var(--neon2)); color: white; }
+.btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border); }
+.input { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; color: var(--text); padding: 12px 16px; width: 100%; outline: none; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 28px; }
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 32px; border-bottom: 1px solid var(--border); background: rgba(10,10,15,0.8); backdrop-filter: blur(12px); sticky; top: 0; z-index: 100; }
+.nav-logo { font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg, var(--neon2), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.progress-bar { height: 6px; background: var(--surface3); border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--neon), var(--cyan)); transition: width 0.5s; }
+.results-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.results-table th, .results-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+.audio-controls { display: flex; gap: 10px; margin-top: 15px; }
+.recommendation-list { margin: 15px 0; padding-left: 20px; }
+.recommendation-list li { margin-bottom: 8px; color: var(--text2); }
+/* Spezifische Test-Elemente */
+.mc-option { background: var(--surface2); border: 2px solid var(--border); border-radius: 12px; padding: 15px; cursor: pointer; margin-bottom: 10px; transition: 0.2s; }
+.mc-option:hover { border-color: var(--neon); }
+.mc-option.selected { border-color: var(--neon); background: rgba(124,58,237,0.1); }
+.mc-option.correct { border-color: var(--green); }
+.mc-option.wrong { border-color: var(--red); }
+.fib-input { background: var(--surface3); border: 2px solid var(--border); color: white; padding: 5px 10px; border-radius: 5px; }
+.error-word { cursor: pointer; padding: 2px 4px; border-radius: 4px; }
+.error-word:hover { background: rgba(245,158,11,0.2); }
+.error-word.selected { background: var(--red); }
 </style>
 </head>
 <body>
 <div class="bg-grid"></div>
-<div class="bg-orb bg-orb-1"></div>
-<div class="bg-orb bg-orb-2"></div>
-<div class="bg-orb bg-orb-3"></div>
-
-<div class="toast-container" id="toast-container"></div>
 
 <div id="app">
-
-<!-- ============================================================
-     LANDING SCREEN
-     ============================================================ -->
-<div class="screen active" id="landing-screen">
-  <nav class="nav">
-    <div class="nav-logo">Lingua<span>Quest</span></div>
-    <div class="nav-right">
-      <button class="btn btn-ghost btn-sm" onclick="showScreen('student-join-screen')">🎓 Als Schüler*in</button>
-      <button class="btn btn-primary btn-sm" onclick="showScreen('teacher-screen'); teacherInit();">👩‍🏫 Als Lehrkraft</button>
-    </div>
-  </nav>
-
-  <div class="landing-hero" style="padding: 80px 20px;">
-    <div class="hero-eyebrow">
-      <div class="hero-eyebrow-dot"></div>
-      Englisch Sprachniveau-Test
-    </div>
-    <h1 class="hero-title">
-      Teste dein<br><span class="gradient">Englisch-Level</span><br>auf die nächste Stufe.
-    </h1>
-    <p class="hero-desc">
-      Interaktive Übungen, Gamification und sofortige Auswertung –<br>
-      designed für Schüler*innen zwischen 15 und 19 Jahren.
-    </p>
-    <div class="hero-actions">
-      <button class="btn btn-primary btn-lg" onclick="showScreen('student-join-screen')">
-        🚀 Test starten
-      </button>
-      <button class="btn btn-secondary btn-lg" onclick="showScreen('teacher-screen'); teacherInit();">
-        📋 Lehrkraft-Dashboard
-      </button>
-    </div>
-
-    <div class="level-cards">
-      <div class="level-card level-card-a2">
-        <div class="level-card-icon">🌱</div>
-        <div class="level-card-name" style="color: var(--a2)">A2</div>
-        <div class="level-card-desc">Grundkenntnisse</div>
-      </div>
-      <div class="level-card level-card-b1">
-        <div class="level-card-icon">🌿</div>
-        <div class="level-card-name" style="color: var(--b1)">B1</div>
-        <div class="level-card-desc">Fortgeschrittene Grundkenntnisse</div>
-      </div>
-      <div class="level-card level-card-b2">
-        <div class="level-card-icon">🌳</div>
-        <div class="level-card-name" style="color: var(--b2)">B2</div>
-        <div class="level-card-desc">Selbstständig</div>
-      </div>
-      <div class="level-card level-card-c1">
-        <div class="level-card-icon">🏆</div>
-        <div class="level-card-name" style="color: var(--c1)">C1</div>
-        <div class="level-card-desc">Kompetente Sprachverwendung</div>
+  <!-- START SCREEN -->
+  <div class="screen active" id="landing-screen">
+    <nav class="nav"><div class="nav-logo">LinguaQuest</div></nav>
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; text-align:center;">
+      <h1 style="font-family:var(--font-head); font-size:3.5rem; margin-bottom:10px;">Ready to <span style="color:var(--neon2)">Level Up?</span></h1>
+      <p style="color:var(--text2); max-width:600px; margin-bottom:30px;">Der adaptive Englischtest für die Oberstufe. Präzise Analyse, Gamification und individuelles Feedback.</p>
+      <div style="display:flex; gap:15px;">
+        <button class="btn btn-primary" onclick="showScreen('student-join-screen')">Start Test</button>
+        <button class="btn btn-secondary" onclick="showScreen('teacher-screen'); teacherInit();">Teacher Login</button>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ============================================================
-     TEACHER SCREEN
-     ============================================================ -->
-<div class="screen" id="teacher-screen">
-  <nav class="nav">
-    <div class="nav-logo">Lingua<span>Quest</span></div>
-    <div class="nav-right">
-      <div class="nav-user">
-        <div class="nav-avatar">LK</div>
-        Lehrkraft
-      </div>
-      <button class="btn btn-ghost btn-sm" onclick="showScreen('landing-screen')">← Zurück</button>
-    </div>
-  </nav>
-
-  <div class="teacher-layout">
-    <div class="sidebar">
-      <div class="sidebar-title">Navigation</div>
-      <button class="sidebar-btn active" id="sb-groups" onclick="teacherTab('groups')">
-        <span class="sidebar-btn-icon">🏫</span> Meine Gruppen
-      </button>
-      <button class="sidebar-btn" id="sb-create" onclick="teacherTab('create')">
-        <span class="sidebar-btn-icon">➕</span> Neue Gruppe
-      </button>
-      <div class="sidebar-sep"></div>
-      <div class="sidebar-title">Info</div>
-      <button class="sidebar-btn" onclick="showInfo()">
-        <span class="sidebar-btn-icon">ℹ️</span> Hilfe
-      </button>
-    </div>
-
-    <div class="main-panel">
-      <!-- Groups Tab -->
-      <div id="panel-groups">
-        <div class="panel-header">
-          <div>
-            <div class="panel-title">Meine Gruppen</div>
-            <div class="panel-subtitle">Übersicht aller angelegten Lerngruppen</div>
-          </div>
-          <button class="btn btn-primary btn-sm" onclick="teacherTab('create')">➕ Neue Gruppe</button>
-        </div>
-        <div class="groups-grid" id="groups-grid">
-          <!-- filled by JS -->
-        </div>
-      </div>
-
-      <!-- Create Group Tab -->
-      <div id="panel-create" style="display:none">
-        <div class="panel-header">
-          <div>
-            <div class="panel-title" id="create-panel-title">Neue Gruppe erstellen</div>
-            <div class="panel-subtitle">Lerngruppe konfigurieren und Test zusammenstellen</div>
-          </div>
-        </div>
-        <div class="create-group-form">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
-            <div class="form-group">
-              <div class="form-label">Gruppenname</div>
-              <input class="input" id="group-name" placeholder="z.B. Klasse 10b" maxlength="40">
-            </div>
-            <div class="form-group">
-              <div class="form-label">Schuljahr / Klasse</div>
-              <input class="input" id="group-class" placeholder="z.B. 10. Klasse" maxlength="30">
-            </div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
-            <div class="form-group">
-              <div class="form-label">Angestrebtes Niveau</div>
-              <select class="input" id="group-level" onchange="updateGrammarList()">
-                <option value="A2">A2 – Grundkenntnisse</option>
-                <option value="B1" selected>B1 – Fortgeschrittene Grundkenntnisse</option>
-                <option value="B2">B2 – Selbstständig</option>
-                <option value="C1">C1 – Kompetente Verwendung</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <div class="form-label">Zugangscode</div>
-              <div style="display:flex;gap:8px">
-                <input class="input" id="group-code" placeholder="AUTO" readonly style="font-family:var(--font-head);font-weight:700;letter-spacing:0.1em">
-                <button class="btn btn-ghost btn-sm" onclick="generateCode()">🔀</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="section-divider">
-            <div class="section-divider-line"></div>
-            <div class="section-divider-text">Grammatik-Strukturen auswählen</div>
-            <div class="section-divider-line"></div>
-          </div>
-
-          <div class="form-group" style="margin-bottom:16px">
-            <div class="form-label">Verfügbare Strukturen für gewähltes Niveau</div>
-            <div class="grammar-grid" id="grammar-grid"></div>
-          </div>
-
-          <div class="section-divider">
-            <div class="section-divider-line"></div>
-            <div class="section-divider-text">Reihenfolge festlegen</div>
-            <div class="section-divider-line"></div>
-          </div>
-
-          <div class="form-group" style="margin-bottom:24px">
-            <div class="form-label">Ausgewählte Strukturen – Reihenfolge per Drag & Drop</div>
-            <div class="order-list" id="order-list">
-              <div class="empty-state" style="padding:20px">
-                <span style="font-size:1.5rem">☝️</span>
-                <span>Bitte wähle mindestens eine Struktur oben aus</span>
-              </div>
-            </div>
-          </div>
-
-          <div style="display:flex;gap:12px;flex-wrap:wrap">
-            <button class="btn btn-primary" onclick="saveGroup()">✅ Gruppe speichern</button>
-            <button class="btn btn-ghost" onclick="teacherTab('groups')">Abbrechen</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Group Detail / Results -->
-      <div id="panel-group-detail" style="display:none">
-        <div class="panel-header">
-          <div>
-            <div class="panel-title" id="detail-title">Gruppe</div>
-            <div class="panel-subtitle" id="detail-subtitle"></div>
-          </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-ghost btn-sm" onclick="teacherTab('groups')">← Alle Gruppen</button>
-            <button class="btn btn-secondary btn-sm" onclick="editGroup()">✏️ Bearbeiten</button>
-            <button class="btn btn-danger btn-sm" onclick="deleteGroup()">🗑️ Löschen</button>
-          </div>
-        </div>
-
-        <!-- Group info card -->
-        <div id="detail-info-card" style="margin-bottom:24px"></div>
-
-        <!-- Tab bar -->
-        <div class="tab-bar" style="max-width:340px;margin-bottom:24px">
-          <button class="tab-bar-btn active" id="dtab-results" onclick="detailTab('results')">📊 Ergebnisse</button>
-          <button class="tab-bar-btn" id="dtab-config" onclick="detailTab('config')">⚙️ Konfiguration</button>
-        </div>
-
-        <div id="detail-results-panel">
-          <div id="results-table-container"></div>
-        </div>
-        <div id="detail-config-panel" style="display:none">
-          <div id="config-display"></div>
+  <!-- TEACHER SCREEN -->
+  <div class="screen" id="teacher-screen">
+    <nav class="nav">
+      <div class="nav-logo">LinguaQuest <span>Admin</span></div>
+      <button class="btn btn-ghost" onclick="showScreen('landing-screen')">Logout</button>
+    </nav>
+    <div style="padding:32px; max-width:1200px; margin:0 auto; width:100%;">
+      <h2 style="font-family:var(--font-head); margin-bottom:20px;">Dashboard: Ergebnisse pro Schüler*in</h2>
+      <div class="card">
+        <div id="teacher-results-container">
+          <p style="color:var(--text3)">Keine Ergebnisse vorhanden.</p>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ============================================================
-     STUDENT JOIN SCREEN
-     ============================================================ -->
-<div class="screen" id="student-join-screen">
-  <nav class="nav">
-    <div class="nav-logo">Lingua<span>Quest</span></div>
-    <div class="nav-right">
-      <button class="btn btn-ghost btn-sm" onclick="showScreen('landing-screen')">← Zurück</button>
-    </div>
-  </nav>
-
-  <div style="display:flex;align-items:center;justify-content:center;flex:1;padding:40px 20px">
-    <div class="join-card">
-      <div style="font-size:3rem;margin-bottom:16px">🎮</div>
-      <div class="join-title">Test beitreten</div>
-      <div class="join-subtitle">Gib den Zugangscode deiner Lehrkraft ein</div>
-
-      <div class="form-group" style="margin-bottom:16px">
-        <div class="form-label">Dein Name</div>
-        <input class="input" id="student-name" placeholder="Vorname Nachname" maxlength="40">
-      </div>
-
-      <div class="form-group" style="margin-bottom:28px">
-        <div class="form-label">Zugangscode</div>
-        <input class="input join-code-input" id="join-code" placeholder="ABC123" maxlength="6" oninput="this.value=this.value.toUpperCase()">
-      </div>
-
-      <button class="btn btn-primary btn-lg" style="width:100%" onclick="joinGroup()">
-        🚀 Test starten!
-      </button>
-
-      <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);text-align:center">
-        <div style="font-size:0.82rem;color:var(--text3);margin-bottom:10px">Oder Demo direkt starten:</div>
-        <button class="btn btn-secondary btn-sm" onclick="startDemo()">▶️ Demo-Test (B1)</button>
+  <!-- STUDENT JOIN SCREEN -->
+  <div class="screen" id="student-join-screen">
+    <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+      <div class="card" style="width:100%; max-width:400px;">
+        <h2 style="margin-bottom:20px; text-align:center;">Join Test</h2>
+        <input class="input" id="student-name" placeholder="Dein Name" style="margin-bottom:15px;">
+        <button class="btn btn-primary" style="width:100%;" onclick="startPlacementTest()">Test starten</button>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ============================================================
-     TEST SCREEN
-     ============================================================ -->
-<div class="screen" id="test-screen">
-  <div class="test-header">
-    <div class="test-header-info">
-      <div class="test-task-name" id="test-task-name">Aufgabe</div>
-      <div class="test-progress-text" id="test-progress-text">Frage 1 von 10</div>
+  <!-- TEST SCREEN -->
+  <div class="screen" id="test-screen">
+    <div class="nav">
+      <div id="test-info">Frage 1/5</div>
+      <div style="width:200px;"><div class="progress-bar"><div class="progress-fill" id="test-progress" style="width:0%"></div></div></div>
     </div>
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px;">
+      <div id="question-container" style="max-width:700px; width:100%;"></div>
+      <div style="margin-top:20px;"><button class="btn btn-primary" id="next-btn" onclick="checkAnswer()">Prüfen</button></div>
+    </div>
+  </div>
 
-    <div style="flex:1;max-width:360px">
-      <div class="progress-bar">
-        <div class="progress-fill" id="test-progress-bar" style="width:0%"></div>
+  <!-- RESULTS SCREEN -->
+  <div class="screen" id="results-screen">
+    <div style="padding:40px; max-width:800px; margin:0 auto; width:100%;">
+      <div class="card" id="results-content">
+        <!-- JS Content -->
       </div>
     </div>
-
-    <div class="test-header-right">
-      <div class="streak-badge" id="streak-badge">🔥 <span id="streak-num">0</span></div>
-      <div class="xp-bar-container">
-        <div class="xp-label">XP</div>
-        <div style="flex:1">
-          <div class="progress-bar">
-            <div class="progress-fill" id="xp-bar" style="width:0%;background:linear-gradient(90deg,var(--yellow),var(--accent))"></div>
-          </div>
-        </div>
-        <div class="xp-label" id="xp-num">0</div>
-      </div>
-      <div class="timer-display" id="timer-display">⏱ <span id="timer-num">30</span>s</div>
-    </div>
   </div>
-
-  <div class="test-body">
-    <div class="question-container" id="question-container">
-      <!-- filled by JS -->
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================
-     RESULTS SCREEN
-     ============================================================ -->
-<div class="screen" id="results-screen">
-  <nav class="nav">
-    <div class="nav-logo">Lingua<span>Quest</span></div>
-    <div class="nav-right">
-      <button class="btn btn-primary btn-sm" onclick="showScreen('landing-screen')">🏠 Startseite</button>
-    </div>
-  </nav>
-  <div id="results-content" style="padding:32px 20px;max-width:860px;margin:0 auto;width:100%">
-    <!-- filled by JS -->
-  </div>
-</div>
-
-</div><!-- #app -->
-
-<!-- ============================================================
-     MODALS
-     ============================================================ -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
-  <div class="modal" id="modal-content"></div>
 </div>
 
 <script>
 /* ============================================================
-   DATA & STATE
+   GRAMMAR DATA - 5 TASKS PER STRUCTURE (Increasing Difficulty)
    ============================================================ */
-const GRAMMAR_BY_LEVEL = {
-  A2: [
-    'Simple Present', 'Simple Past', 'Present Progressive', 'Be going to',
-    'Modal verbs (can, must, may)', 'Comparative adjectives', 'Superlative adjectives',
-    'Possessive pronouns', 'Question words (Wh-)', 'There is / There are',
-    'Countable & Uncountable nouns', 'Prepositions of place & time'
+const GRAMMAR_DATA = {
+  "Question words (Wh-)": [
+    { level: 1, type: "mc", q: "___ is your best friend? - It's Sarah.", opts: ["Who", "Which", "Whose", "Where"], ans: 0 },
+    { level: 2, type: "fib", q: "___ (Wann) does the lesson start tomorrow?", ans: "When" },
+    { level: 3, type: "mc", q: "___ of these two cars is faster?", opts: ["What", "Which", "Whose", "How"], ans: 1 },
+    { level: 4, type: "fib", q: "___ (Wessen) bag is this? It's lying on the floor.", ans: "Whose" },
+    { level: 5, type: "reorder", words: ["does", "How", "often", "she", "go", "gym", "the", "?"], correct: ["How", "often", "does", "she", "go", "to", "the", "gym", "?"] }
   ],
-  B1: [
-    'Present Perfect Simple', 'Past Progressive', 'Used to', 'Will vs. Going to',
-    'Conditional I (real)', 'Conditional II (unreal)', 'Passive voice (simple)',
-    'Relative clauses (defining)', 'Modal verbs (should, could, might)',
-    'Gerund vs. Infinitive', 'Reported speech (statements)', 'Phrasal verbs (basic)',
-    'Too / Enough', 'Articles (a, an, the)', 'Connectors (although, however, therefore)'
+  "Present Perfect": [
+    { level: 1, type: "mc", q: "I ___ my keys. I can't find them!", opts: ["have lost", "lost", "has lost", "am losing"], ans: 0 },
+    { level: 2, type: "fib", q: "She ___ (live) in London for three years now.", ans: "has lived" },
+    { level: 3, type: "mc", q: "Have you ___ been to New York?", opts: ["never", "yet", "ever", "since"], ans: 2 },
+    { level: 4, type: "fib", q: "We haven't seen him ___ (seit) last Tuesday.", ans: "since" },
+    { level: 5, type: "error", sentence: "They have went to the cinema already.", error: "went", correction: "gone" }
   ],
-  B2: [
-    'Present Perfect Continuous', 'Past Perfect', 'Conditional III', 'Mixed conditionals',
-    'Passive voice (all tenses)', 'Relative clauses (non-defining)', 'Reported speech (questions/commands)',
-    'Modal verbs (advanced)', 'Subjunctive mood', 'Emphatic structures (cleft sentences)',
-    'Inversion after negative adverbials', 'Causative have/get', 'Linking devices (advanced)',
-    'Phrasal verbs (advanced)', 'Collocations'
-  ],
-  C1: [
-    'Participle clauses', 'Nominal clauses', 'Ellipsis and substitution', 'Nominalization',
-    'Modal verbs (deduction, speculation)', 'Distancing language (seem, appear)',
-    'Discourse markers', 'Passive reporting structures', 'Hypothetical past',
-    'Inverted conditionals', 'Fronting / Topicalization', 'Advanced collocations & idioms',
-    'Coherence & cohesion devices', 'Register & style variation'
+  "Passive Voice": [
+    { level: 1, type: "mc", q: "The cake ___ by my grandmother yesterday.", opts: ["was baked", "is baked", "baked", "was baking"], ans: 0 },
+    { level: 2, type: "fib", q: "English ___ (speak) all over the world.", ans: "is spoken" },
+    { level: 3, type: "mc", q: "The letters ___ yet.", opts: ["haven't been sent", "not sent", "won't sent", "are not sent"], ans: 0 },
+    { level: 4, type: "fib", q: "The bridge ___ (build) in 1920.", ans: "was built" },
+    { level: 5, type: "reorder", words: ["being", "The", "is", "cleaned", "room", "now", "."], correct: ["The", "room", "is", "being", "cleaned", "now", "."] }
   ]
 };
 
-let groups = JSON.parse(localStorage.getItem('lq_groups') || '[]');
-let currentGroup = null;
-let editingGroupId = null;
-let selectedGrammar = [];
-let orderedGrammar = [];
-let dragSrcEl = null;
-
-// Test state
-let testState = {
-  groupId: null,
-  studentName: '',
-  questions: [],
-  currentQ: 0,
-  answers: [],
-  xp: 0,
-  streak: 0,
-  maxStreak: 0,
-  timerInterval: null,
-  timerLeft: 30,
-  startTime: null,
-  submitted: false
+let currentState = {
+  name: "",
+  currentStructure: "Question words (Wh-)",
+  questionIdx: 0,
+  score: {},
+  results: [],
+  allAnswers: []
 };
 
-/* ============================================================
-   SCREEN MANAGEMENT
-   ============================================================ */
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-/* ============================================================
-   TOAST
-   ============================================================ */
-function toast(msg, type = 'info') {
-  const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
-  const el = document.createElement('div');
-  el.className = `toast ${type}`;
-  el.innerHTML = `<span>${icons[type]||'💬'}</span><span>${msg}</span>`;
-  document.getElementById('toast-container').appendChild(el);
-  setTimeout(() => el.remove(), 3200);
-}
-
-/* ============================================================
-   MODAL
-   ============================================================ */
-function openModal(html) {
-  document.getElementById('modal-content').innerHTML = html;
-  document.getElementById('modal-overlay').classList.add('open');
-}
-function closeModal(e) {
-  if (e.target === document.getElementById('modal-overlay') || !e)
-    document.getElementById('modal-overlay').classList.remove('open');
-}
-function closeModalDirect() {
-  document.getElementById('modal-overlay').classList.remove('open');
-}
-
-/* ============================================================
-   TEACHER DASHBOARD
-   ============================================================ */
-function teacherInit() {
-  renderGroups();
-  updateGrammarList();
-  generateCode();
-}
-
-function teacherTab(tab) {
-  ['groups','create','group-detail'].forEach(t => {
-    const el = document.getElementById(`panel-${t}`);
-    if(el) el.style.display = 'none';
-  });
-  ['groups','create'].forEach(id => {
-    const btn = document.getElementById(`sb-${id}`);
-    if(btn) btn.classList.remove('active');
-  });
-
-  document.getElementById(`panel-${tab}`).style.display = '';
-  const sbBtn = document.getElementById(`sb-${tab}`);
-  if(sbBtn) sbBtn.classList.add('active');
-
-  if(tab === 'create') {
-    if(!editingGroupId) {
-      document.getElementById('create-panel-title').textContent = 'Neue Gruppe erstellen';
-      document.getElementById('group-name').value = '';
-      document.getElementById('group-class').value = '';
-      document.getElementById('group-level').value = 'B1';
-      selectedGrammar = [];
-      orderedGrammar = [];
-      generateCode();
-      updateGrammarList();
-    }
-  }
-}
-
-function generateCode() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let code = '';
-  for(let i=0;i<6;i++) code += chars[Math.floor(Math.random()*chars.length)];
-  document.getElementById('group-code').value = code;
-}
-
-function updateGrammarList() {
-  const level = document.getElementById('group-level').value;
-  const list = GRAMMAR_BY_LEVEL[level];
-  const grid = document.getElementById('grammar-grid');
-  grid.innerHTML = list.map((g,i) => `
-    <div class="grammar-item ${selectedGrammar.includes(g)?'selected':''}" onclick="toggleGrammar('${g.replace(/'/g,"\\'")}')">
-      <div class="grammar-check">${selectedGrammar.includes(g)?'✓':''}</div>
-      <span>${g}</span>
-    </div>
-  `).join('');
-  renderOrderList();
-}
-
-function toggleGrammar(g) {
-  if(selectedGrammar.includes(g)) {
-    selectedGrammar = selectedGrammar.filter(x=>x!==g);
-    orderedGrammar = orderedGrammar.filter(x=>x!==g);
-  } else {
-    selectedGrammar.push(g);
-    orderedGrammar.push(g);
-  }
-  updateGrammarList();
-}
-
-function renderOrderList() {
-  const list = document.getElementById('order-list');
-  if(orderedGrammar.length === 0) {
-    list.innerHTML = `<div class="empty-state" style="padding:20px"><span style="font-size:1.5rem">☝️</span><span>Bitte wähle mindestens eine Struktur oben aus</span></div>`;
-    return;
-  }
-  list.innerHTML = orderedGrammar.map((g,i) => `
-    <div class="order-item" draggable="true" data-idx="${i}"
-      ondragstart="dndStart(event)" ondragover="dndOver(event)" ondrop="dndDrop(event)" ondragend="dndEnd(event)">
-      <span class="order-handle">⠿</span>
-      <div class="order-num">${i+1}</div>
-      <span>${g}</span>
-      <span style="margin-left:auto;cursor:pointer;color:var(--text3);font-size:1rem" onclick="toggleGrammar('${g.replace(/'/g,"\\'")}')">✕</span>
-    </div>
-  `).join('');
-}
-
-// Drag & Drop for order list
-function dndStart(e) { dragSrcEl = e.currentTarget; e.currentTarget.classList.add('dragging'); }
-function dndOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
-function dndEnd(e) { document.querySelectorAll('.order-item').forEach(el => { el.classList.remove('dragging','drag-over'); }); }
-function dndDrop(e) {
-  e.preventDefault();
-  const fromIdx = parseInt(dragSrcEl.dataset.idx);
-  const toIdx = parseInt(e.currentTarget.dataset.idx);
-  if(fromIdx === toIdx) return;
-  const moved = orderedGrammar.splice(fromIdx, 1)[0];
-  orderedGrammar.splice(toIdx, 0, moved);
-  renderOrderList();
-}
-
-function saveGroup() {
-  const name = document.getElementById('group-name').value.trim();
-  const cls = document.getElementById('group-class').value.trim();
-  const level = document.getElementById('group-level').value;
-  const code = document.getElementById('group-code').value;
-  if(!name) { toast('Bitte Gruppenname eingeben', 'error'); return; }
-  if(orderedGrammar.length === 0) { toast('Bitte mindestens eine Grammatikstruktur auswählen', 'error'); return; }
-
-  if(editingGroupId) {
-    const idx = groups.findIndex(g=>g.id===editingGroupId);
-    if(idx>=0) { groups[idx] = {...groups[idx], name, cls, level, code, grammar: [...orderedGrammar], updatedAt: Date.now()}; }
-    editingGroupId = null;
-    toast('Gruppe aktualisiert! ✅', 'success');
-  } else {
-    groups.push({
-      id: Date.now().toString(),
-      name, cls, level, code,
-      grammar: [...orderedGrammar],
-      students: [],
-      createdAt: Date.now()
-    });
-    toast('Gruppe erstellt! 🎉', 'success');
-  }
-  saveGroups();
-  teacherTab('groups');
-  renderGroups();
-}
-
-function renderGroups() {
-  const grid = document.getElementById('groups-grid');
-  if(groups.length === 0) {
-    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
-      <div class="empty-icon">🏫</div>
-      <div class="empty-title">Noch keine Gruppen</div>
-      <p>Erstelle deine erste Lerngruppe!</p>
-      <button class="btn btn-primary" style="margin-top:12px" onclick="teacherTab('create')">➕ Neue Gruppe</button>
-    </div>`;
-    return;
-  }
-  grid.innerHTML = groups.map(g => {
-    const studentCount = (g.students||[]).length;
-    const avgScore = studentCount > 0
-      ? Math.round((g.students||[]).reduce((s,st)=>s+(st.score||0),0)/studentCount)
-      : 0;
-    return `
-    <div class="group-card" onclick="openGroupDetail('${g.id}')">
-      <div class="group-card-header">
-        <div class="group-card-icon">${levelIcon(g.level)}</div>
-        <div class="group-card-actions" onclick="event.stopPropagation()">
-          <button class="btn btn-ghost btn-sm" onclick="editGroupById('${g.id}')">✏️</button>
-          <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="deleteGroupById('${g.id}')">🗑️</button>
-        </div>
-      </div>
-      <div class="group-card-name">${esc(g.name)}</div>
-      <div class="group-card-meta">
-        <span class="badge badge-${g.level.toLowerCase()}">${g.level}</span>
-        <span class="badge badge-neon">Code: ${g.code}</span>
-        ${g.cls?`<span style="font-size:0.8rem;color:var(--text3)">${esc(g.cls)}</span>`:''}
-      </div>
-      <div class="group-card-stats">
-        <div class="stat"><div class="stat-val">${studentCount}</div><div class="stat-label">Schüler*innen</div></div>
-        <div class="stat"><div class="stat-val">${g.grammar.length}</div><div class="stat-label">Strukturen</div></div>
-        ${studentCount>0?`<div class="stat"><div class="stat-val">${avgScore}%</div><div class="stat-label">Ø Score</div></div>`:''}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function levelIcon(l) { return {A2:'🌱',B1:'🌿',B2:'🌳',C1:'🏆'}[l]||'📚'; }
-
-function openGroupDetail(id) {
-  currentGroup = groups.find(g=>g.id===id);
-  if(!currentGroup) return;
-  ['groups','create'].forEach(t => { document.getElementById(`panel-${t}`).style.display = 'none'; });
-  ['groups','create'].forEach(id2 => { const b = document.getElementById(`sb-${id2}`); if(b) b.classList.remove('active'); });
-  document.getElementById('panel-group-detail').style.display = '';
-  renderGroupDetail();
-}
-
-function renderGroupDetail() {
-  const g = currentGroup;
-  document.getElementById('detail-title').textContent = g.name;
-  document.getElementById('detail-subtitle').textContent = `${g.cls||''} · Niveau ${g.level} · Code: ${g.code}`;
-
-  document.getElementById('detail-info-card').innerHTML = `
-    <div class="card" style="display:flex;gap:24px;flex-wrap:wrap;align-items:center">
-      <div style="font-size:3rem">${levelIcon(g.level)}</div>
-      <div style="flex:1">
-        <div style="font-family:var(--font-head);font-size:1.3rem;font-weight:700">${esc(g.name)}</div>
-        <div style="color:var(--text2);font-size:0.9rem;margin:4px 0">${g.cls||''}</div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
-          <span class="badge badge-${g.level.toLowerCase()}">${g.level}</span>
-          <span class="badge badge-neon">📋 Code: ${g.code}</span>
-          <span style="font-size:0.82rem;color:var(--text3)">Erstellt: ${new Date(g.createdAt).toLocaleDateString('de-DE')}</span>
-        </div>
-      </div>
-      <div style="display:flex;gap:20px">
-        <div class="stat"><div class="stat-val">${(g.students||[]).length}</div><div class="stat-label">Schüler*innen</div></div>
-        <div class="stat"><div class="stat-val">${g.grammar.length}</div><div class="stat-label">Strukturen</div></div>
-      </div>
-    </div>`;
-
-  detailTab('results');
-}
-
-function detailTab(tab) {
-  ['results','config'].forEach(t => {
-    document.getElementById(`detail-${t}-panel`).style.display = t===tab?'':'none';
-    document.getElementById(`dtab-${t}`).classList.toggle('active', t===tab);
-  });
-  if(tab==='results') renderResultsTable();
-  if(tab==='config') renderConfigDisplay();
-}
-
-function renderResultsTable() {
-  const g = currentGroup;
-  const students = g.students || [];
-  const container = document.getElementById('results-table-container');
-  if(students.length === 0) {
-    container.innerHTML = `<div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">Noch keine Ergebnisse</div><p>Schüler*innen können mit dem Code <strong style="color:var(--neon2)">${g.code}</strong> am Test teilnehmen.</p></div>`;
-    return;
-  }
-  const sorted = [...students].sort((a,b)=>(b.score||0)-(a.score||0));
-  container.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-      <div style="font-family:var(--font-head);font-size:1.1rem;font-weight:700">Testergebnisse</div>
-      <button class="btn btn-danger btn-sm" onclick="clearResults()">🗑️ Alle Ergebnisse löschen</button>
-    </div>
-    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden">
-    <table class="results-table">
-      <thead>
-        <tr>
-          <th>#</th><th>Name</th><th>Niveau</th><th>Score</th><th>Richtig</th><th>XP</th><th>Streak</th><th>Zeit</th><th>Datum</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${sorted.map((s,i) => {
-          const scoreColor = s.score>=80?'var(--green)':s.score>=60?'var(--yellow)':'var(--red)';
-          return `<tr>
-            <td style="color:var(--text3);font-weight:700">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</td>
-            <td style="font-weight:600">${esc(s.name)}</td>
-            <td><span class="badge badge-${(s.achievedLevel||'B1').toLowerCase()}">${s.achievedLevel||'–'}</span></td>
-            <td><div class="score-ring" style="color:${scoreColor};border-color:${scoreColor}">${s.score}%</div></td>
-            <td style="color:var(--green)">${s.correct}/${s.total}</td>
-            <td style="color:var(--yellow);font-family:var(--font-head);font-weight:700">⚡${s.xp||0}</td>
-            <td style="color:var(--neon2)">🔥${s.maxStreak||0}</td>
-            <td style="color:var(--text3)">${s.timeSecs||0}s</td>
-            <td style="color:var(--text3);font-size:0.8rem">${new Date(s.date).toLocaleDateString('de-DE')}</td>
-          </tr>`;
-        }).join('')}
-      </tbody>
-    </table></div>`;
-}
-
-function renderConfigDisplay() {
-  const g = currentGroup;
-  document.getElementById('config-display').innerHTML = `
-    <div class="card">
-      <div style="font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:16px">Grammatik-Strukturen (Reihenfolge)</div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        ${g.grammar.map((item,i) => `
-          <div style="display:flex;align-items:center;gap:12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px">
-            <div class="order-num">${i+1}</div>
-            <span style="font-size:0.9rem">${item}</span>
-          </div>`).join('')}
-      </div>
-    </div>`;
-}
-
-function editGroupById(id) {
-  event.stopPropagation();
-  const g = groups.find(gr=>gr.id===id);
-  if(!g) return;
-  editingGroupId = id;
-  document.getElementById('group-name').value = g.name;
-  document.getElementById('group-class').value = g.cls||'';
-  document.getElementById('group-level').value = g.level;
-  document.getElementById('group-code').value = g.code;
-  selectedGrammar = [...g.grammar];
-  orderedGrammar = [...g.grammar];
-  document.getElementById('create-panel-title').textContent = 'Gruppe bearbeiten';
-  updateGrammarList();
-  teacherTab('create');
-}
-
-function editGroup() { editingGroupId = currentGroup.id; editGroupById(currentGroup.id); }
-
-function deleteGroupById(id) {
-  event.stopPropagation();
-  if(!confirm('Gruppe wirklich löschen? Alle Ergebnisse gehen verloren.')) return;
-  groups = groups.filter(g=>g.id!==id);
-  saveGroups();
-  renderGroups();
-  toast('Gruppe gelöscht', 'info');
-}
-
-function deleteGroup() { deleteGroupById(currentGroup.id); teacherTab('groups'); }
-
-function clearResults() {
-  if(!confirm('Alle Ergebnisse dieser Gruppe löschen?')) return;
-  currentGroup.students = [];
-  saveGroups();
-  renderResultsTable();
-  toast('Ergebnisse gelöscht', 'info');
-}
-
-function saveGroups() { localStorage.setItem('lq_groups', JSON.stringify(groups)); }
-
-function showInfo() {
-  openModal(`
-    <div style="text-align:center;margin-bottom:24px">
-      <div style="font-size:2.5rem">📖</div>
-      <div style="font-family:var(--font-head);font-size:1.4rem;font-weight:800;margin-top:8px">Hilfe & Anleitung</div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:14px;font-size:0.9rem;color:var(--text2)">
-      <div><strong style="color:var(--text)">1. Gruppe erstellen</strong><br>Wähle Niveau, Grammatikstrukturen und vergib einen Code.</div>
-      <div><strong style="color:var(--text)">2. Zugangscode teilen</strong><br>Schüler*innen geben den Code auf der Startseite ein.</div>
-      <div><strong style="color:var(--text)">3. Test absolvieren</strong><br>Verschiedene interaktive Aufgabentypen mit Gamification.</div>
-      <div><strong style="color:var(--text)">4. Ergebnisse ansehen</strong><br>Alle Resultate erscheinen hier im Dashboard.</div>
-    </div>
-    <button class="btn btn-primary" style="width:100%;margin-top:24px" onclick="closeModalDirect()">Verstanden!</button>
-  `);
-}
-
-/* ============================================================
-   STUDENT JOIN
-   ============================================================ */
-function joinGroup() {
-  const name = document.getElementById('student-name').value.trim();
-  const code = document.getElementById('join-code').value.trim().toUpperCase();
-  if(!name) { toast('Bitte deinen Namen eingeben', 'error'); return; }
-  if(code.length !== 6) { toast('Bitte 6-stelligen Code eingeben', 'error'); return; }
-  const g = groups.find(gr=>gr.code===code);
-  if(!g) { toast('Code nicht gefunden – bitte überprüfe die Eingabe', 'error'); return; }
-  startTest(g, name);
-}
-
-function startDemo() {
-  const name = document.getElementById('student-name').value.trim() || 'Demo-Schüler*in';
-  const demoGroup = {
-    id: 'demo', name: 'Demo-Gruppe', level: 'B1', code: 'DEMO01',
-    grammar: ['Present Perfect Simple','Conditional I (real)','Passive voice (simple)','Reported speech (statements)','Gerund vs. Infinitive'],
-    students: []
-  };
-  startTest(demoGroup, name);
-}
-
-/* ============================================================
-   TEST ENGINE
-   ============================================================ */
-const QUESTION_TEMPLATES = {
-  'Present Perfect Simple': [
-    { type: 'mc', q: 'She ___ never ___ sushi before.', opts: ['has / eaten','have / ate','has / ate','have / eaten'], ans: 0, hint: 'has + past participle' },
-    { type: 'fib', q: 'They ___ (live) in Berlin for five years.', ans: 'have lived', hint: 'have/has + past participle' },
-    { type: 'dnd', sentence: ['I', '___', 'my', 'homework', 'already.'], words: ['have done','did','has done','do'], ans: 'have done', blanks: [1] },
-    { type: 'mc', q: 'How long ___ you ___ English?', opts: ['have / learned','did / learned','have / learn','do / learn'], ans: 0 },
-    { type: 'reorder', words: ['been', 'Have', 'you', 'ever', 'to', 'London', '?'], correct: ['Have','you','ever','been','to','London','?'] }
-  ],
-  'Conditional I (real)': [
-    { type: 'mc', q: 'If it rains, we ___ inside.', opts: ['will stay','would stay','stay','stayed'], ans: 0, hint: 'If + Simple Present → will + infinitive' },
-    { type: 'fib', q: 'If she studies hard, she ___ (pass) the exam.', ans: 'will pass' },
-    { type: 'dnd', sentence: ['If', 'you', '___', 'early,', 'you', "won't", 'miss', 'the', 'bus.'], words: ['leave','left','leaving','will leave'], ans: 'leave', blanks: [2] },
-    { type: 'mc', q: 'Unless he ___, he will fail.', opts: ['studies','will study','studied','study'], ans: 0 },
-    { type: 'reorder', words: ['we', 'will', 'go', 'If', 'the', 'sun', 'shines,', 'out.'], correct: ['If','the','sun','shines,','we','will','go','out.'] }
-  ],
-  'Passive voice (simple)': [
-    { type: 'mc', q: 'The cake ___ by my mum yesterday.', opts: ['was baked','is baked','were baked','baked'], ans: 0, hint: 'was/were + past participle' },
-    { type: 'fib', q: 'English ___ (speak) all over the world.', ans: 'is spoken' },
-    { type: 'dnd', sentence: ['The', 'letters', '___', 'delivered', 'every', 'morning.'], words: ['are','is','were','be'], ans: 'are', blanks: [2] },
-    { type: 'mc', q: 'The window ___ broken during the storm.', opts: ['was','is','were','has'], ans: 0 },
-    { type: 'error', sentence: 'The movie were directed by a famous director.', errorWord: 'were', correction: 'was' }
-  ],
-  'Reported speech (statements)': [
-    { type: 'mc', q: 'She said: "I am happy." → She said that she ___ happy.', opts: ['was','is','were','had been'], ans: 0, hint: 'Present → Past in reported speech' },
-    { type: 'fib', q: 'He said: "I will call you." → He said that he ___ call me.', ans: 'would' },
-    { type: 'dnd', sentence: ['She', 'told', 'me', 'that', 'she', '___', 'tired.'], words: ['was','is','were','had'], ans: 'was', blanks: [5] },
-    { type: 'mc', q: 'They said: "We have finished." → They said they ___.', opts: ['had finished','have finished','finished','had been finishing'], ans: 0 }
-  ],
-  'Gerund vs. Infinitive': [
-    { type: 'mc', q: 'I enjoy ___ to music.', opts: ['listening','to listen','listen','listened'], ans: 0, hint: 'enjoy + gerund (-ing)' },
-    { type: 'mc', q: 'She decided ___ abroad.', opts: ['to study','studying','study','studied'], ans: 0, hint: 'decide + infinitive (to)' },
-    { type: 'fib', q: 'He avoided ___ (make) eye contact.', ans: 'making' },
-    { type: 'dnd', sentence: ['I', 'would', 'like', '___', 'a', 'sandwich.'], words: ['to have','having','have','had'], ans: 'to have', blanks: [3] },
-    { type: 'mc', q: 'They finished ___ the project last night.', opts: ['completing','to complete','complete','completed'], ans: 0 }
-  ],
-  'Simple Present': [
-    { type: 'mc', q: 'She ___ to school every day.', opts: ['goes','go','going','went'], ans: 0 },
-    { type: 'fib', q: 'He ___ (not like) coffee.', ans: "doesn't like" },
-    { type: 'dnd', sentence: ['They', '___', 'football', 'on', 'Sundays.'], words: ['play','plays','played','are playing'], ans: 'play', blanks: [1] },
-    { type: 'mc', q: '___ you speak French?', opts: ['Do','Does','Are','Is'], ans: 0 },
-    { type: 'reorder', words: ['does','What','in','he','do','his','free','time','?'], correct: ['What','does','he','do','in','his','free','time','?'] }
-  ],
-  'Simple Past': [
-    { type: 'mc', q: 'Yesterday, I ___ to the cinema.', opts: ['went','go','gone','going'], ans: 0 },
-    { type: 'fib', q: 'She ___ (buy) a new phone last week.', ans: 'bought' },
-    { type: 'error', sentence: 'He goed to the park yesterday.', errorWord: 'goed', correction: 'went' },
-    { type: 'mc', q: '___ they arrive on time?', opts: ['Did','Do','Were','Have'], ans: 0 }
-  ],
-  'Modal verbs (can, must, may)': [
-    { type: 'mc', q: 'You ___ smoke in this area – it is forbidden.', opts: ["mustn't",'can','may','should'], ans: 0 },
-    { type: 'fib', q: '___ I use your phone, please?', ans: 'Can' },
-    { type: 'mc', q: 'She ___ swim very well – she won the race.', opts: ['can','must','may','might'], ans: 0 }
-  ],
-  'Comparative adjectives': [
-    { type: 'mc', q: 'This film is ___ than the last one.', opts: ['more interesting','most interesting','interestinger','interesting'], ans: 0 },
-    { type: 'fib', q: 'He is ___ (tall) his brother.', ans: 'taller than' },
-    { type: 'reorder', words: ['much','is','She','intelligent','than','him.','more'], correct: ['She','is','much','more','intelligent','than','him.'] }
-  ],
-  'Present Perfect Continuous': [
-    { type: 'mc', q: 'I ___ for three hours.', opts: ['have been studying','have studied','am studying','studied'], ans: 0 },
-    { type: 'fib', q: 'She ___ (work) here since 2019.', ans: 'has been working' },
-    { type: 'dnd', sentence: ['They', '___', 'all', 'day.'], words: ['have been running','have run','are running','ran'], ans: 'have been running', blanks: [1] }
-  ],
-  'Past Perfect': [
-    { type: 'mc', q: 'When I arrived, the film ___.', opts: ['had already started','has started','already started','was starting'], ans: 0 },
-    { type: 'fib', q: 'She was tired because she ___ (not sleep) well.', ans: "hadn't slept" },
-    { type: 'error', sentence: 'By the time we arrived, they already left.', errorWord: 'left', correction: 'had left' }
-  ],
-  'Conditional II (unreal)': [
-    { type: 'mc', q: 'If I were rich, I ___ travel the world.', opts: ['would','will','could have','should'], ans: 0 },
-    { type: 'fib', q: 'If she had more time, she ___ (learn) Spanish.', ans: 'would learn' },
-    { type: 'dnd', sentence: ['I', '___', 'happier', 'if', 'I', 'had', 'a', 'dog.'], words: ['would be','will be','would have been','am'], ans: 'would be', blanks: [1] }
-  ],
-  'Relative clauses (defining)': [
-    { type: 'mc', q: 'That is the man ___ helped me.', opts: ['who','which','what','whose'], ans: 0 },
-    { type: 'fib', q: 'The book ___ I read was amazing.', ans: 'that' },
-    { type: 'mc', q: 'She is the teacher ___ students love her.', opts: ['whose','who','which','that'], ans: 0 }
-  ],
-  'Phrasal verbs (basic)': [
-    { type: 'mc', q: 'Can you ___ the TV? I can\'t hear.', opts: ['turn up','turn off','turn in','turn out'], ans: 0 },
-    { type: 'fib', q: 'She ___ (give up) smoking last year.', ans: 'gave up' },
-    { type: 'mc', q: 'He ___ at the bus stop.', opts: ['got off','got on','got up','got over'], ans: 0 }
-  ],
-  'Conditional III': [
-    { type: 'mc', q: 'If I had studied, I ___ the exam.', opts: ['would have passed','would pass','had passed','passed'], ans: 0 },
-    { type: 'fib', q: 'She would have come if she ___ (know).', ans: 'had known' },
-    { type: 'dnd', sentence: ['If', 'they', 'had', 'left', 'earlier,', 'they', '___', 'the', 'train.'], words: ["wouldn't have missed",'wouldn\'t miss','hadn\'t missed','don\'t miss'], ans: "wouldn't have missed", blanks: [6] }
-  ],
-  'Inversion after negative adverbials': [
-    { type: 'mc', q: 'Never ___ I seen such a beautiful view.', opts: ['have','had','did','do'], ans: 0 },
-    { type: 'fib', q: 'Not only ___ she talented, but also hardworking.', ans: 'is' },
-    { type: 'error', sentence: 'Rarely I have seen such dedication.', errorWord: 'I', correction: 'have I' }
-  ],
-  'Participle clauses': [
-    { type: 'mc', q: '___ the door, she found her keys.', opts: ['Opening','Opened','To open','Open'], ans: 0 },
-    { type: 'fib', q: '___ (exhaust) after the run, he sat down.', ans: 'Exhausted' },
-    { type: 'mc', q: 'The letter ___ yesterday was important.', opts: ['received','receiving','receive','having received'], ans: 0 }
-  ]
-};
-
-// Fallback generic questions for any grammar topic
-function genericQuestions(grammar) {
-  return [
-    { type: 'mc', q: `Which sentence uses "${grammar}" correctly?`, opts: ['She have been waiting.','She has been waiting.','She is been waiting.','She was been waiting.'], ans: 1 },
-    { type: 'fib', q: `Complete with the correct form (${grammar}): I ___ (finish) already.`, ans: 'have finished' },
-    { type: 'mc', q: `"${grammar}" is used to express:`, opts: ['completed actions','future plans','daily routines','imaginary situations'], ans: 0 }
-  ];
-}
-
-function buildQuestions(grammar) {
-  let qs = [];
-  grammar.forEach(g => {
-    const pool = QUESTION_TEMPLATES[g] || genericQuestions(g);
-    // pick 2-3 per structure
-    const picks = [...pool].sort(()=>Math.random()-0.5).slice(0, Math.min(2, pool.length));
-    picks.forEach(q => qs.push({...q, grammar: g}));
-  });
-  // shuffle
-  return qs.sort(()=>Math.random()-0.5).slice(0, Math.min(20, qs.length));
-}
-
-function startTest(group, studentName) {
-  testState = {
-    groupId: group.id,
-    groupObj: group,
-    studentName,
-    questions: buildQuestions(group.grammar),
-    currentQ: 0,
-    answers: [],
-    xp: 0,
-    streak: 0,
-    maxStreak: 0,
-    timerInterval: null,
-    timerLeft: 30,
-    startTime: Date.now(),
-    totalTime: 0,
-    submitted: false
-  };
+function startPlacementTest() {
+  const nameInput = document.getElementById('student-name').value;
+  if(!nameInput) return alert("Name bitte!");
+  currentState.name = nameInput;
+  currentState.currentStructure = Object.keys(GRAMMAR_DATA)[0];
+  currentState.questionIdx = 0;
+  currentState.allAnswers = [];
   showScreen('test-screen');
   renderQuestion();
 }
 
 function renderQuestion() {
-  const state = testState;
-  const q = state.questions[state.currentQ];
-  const total = state.questions.length;
-  const pct = Math.round((state.currentQ / total) * 100);
-
-  document.getElementById('test-task-name').textContent = q.grammar || 'Grammatik';
-  document.getElementById('test-progress-text').textContent = `Frage ${state.currentQ+1} von ${total}`;
-  document.getElementById('test-progress-bar').style.width = pct + '%';
-  document.getElementById('streak-num').textContent = state.streak;
-  document.getElementById('xp-num').textContent = state.xp;
-  document.getElementById('xp-bar').style.width = Math.min((state.xp % 100), 100) + '%';
-
-  startTimer();
-
+  const qData = GRAMMAR_DATA[currentState.currentStructure][currentState.questionIdx];
   const container = document.getElementById('question-container');
-  container.innerHTML = '';
+  const info = document.getElementById('test-info');
+  const progress = document.getElementById('test-progress');
 
-  const wrap = document.createElement('div');
-  wrap.innerHTML = buildQuestionHTML(q);
-  container.appendChild(wrap);
+  const totalQs = Object.keys(GRAMMAR_DATA).length * 5;
+  const currentQNum = (Object.keys(GRAMMAR_DATA).indexOf(currentState.currentStructure) * 5) + currentState.questionIdx + 1;
+  
+  info.innerText = `${currentState.currentStructure} (Level ${qData.level}/5)`;
+  progress.style.width = `${(currentQNum / totalQs) * 100}%`;
 
-  // Attach drag events after render
-  if(q.type === 'dnd') attachDndEvents(q);
-  if(q.type === 'reorder') attachReorderEvents(q);
-  if(q.type === 'error') attachErrorEvents(q);
-}
+  let html = `<h3 style="margin-bottom:20px;">${qData.q || "Was ist hier richtig?"}</h3>`;
 
-function buildQuestionHTML(q) {
-  const typeLabels = { mc:'Multiple Choice', fib:'Lückentext', dnd:'Drag & Drop', reorder:'Satz sortieren', error:'Fehler finden', matching:'Zuordnung' };
-  const typeIcons = { mc:'🔘', fib:'✏️', dnd:'🧩', reorder:'🔀', error:'🔍', matching:'🔗' };
-
-  let body = '';
-  switch(q.type) {
-    case 'mc': body = buildMC(q); break;
-    case 'fib': body = buildFIB(q); break;
-    case 'dnd': body = buildDND(q); break;
-    case 'reorder': body = buildReorder(q); break;
-    case 'error': body = buildError(q); break;
-    default: body = buildMC(q);
+  if(qData.type === 'mc') {
+    html += qData.opts.map((o, i) => `<div class="mc-option" onclick="selectMC(${i})" id="mc-${i}">${o}</div>`).join('');
+  } else if(qData.type === 'fib') {
+    html += `<input class="input" id="fib-ans" placeholder="Antwort...">`;
+  } else if(qData.type === 'reorder') {
+    html += `<p style="color:var(--text2); margin-bottom:10px;">Bringe die Wörter in Ordnung:</p>
+             <div class="card" style="background:var(--surface2)">${qData.words.join(' ')}</div>
+             <input class="input" style="margin-top:15px;" id="reorder-ans" placeholder="Satz schreiben...">`;
+  } else if(qData.type === 'error') {
+    html += `<p>${qData.sentence}</p><input class="input" style="margin-top:15px;" id="error-ans" placeholder="Korrektes Wort...">`;
   }
 
-  return `
-    <div class="question-type-badge">${typeIcons[q.type]||'📝'} ${typeLabels[q.type]||q.type}</div>
-    ${q.hint ? `<div style="display:flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--yellow);margin-bottom:12px">💡 Tipp: ${q.hint}</div>` : ''}
-    ${body}
-    <div id="feedback-area"></div>
-    <div class="question-nav">
-      <div style="font-size:0.85rem;color:var(--text3)">Frage ${testState.currentQ+1} / ${testState.questions.length}</div>
-      <button class="btn btn-primary" id="submit-q-btn" onclick="submitQuestion()">Prüfen ✓</button>
-    </div>`;
+  container.innerHTML = html;
+  document.getElementById('next-btn').innerText = "Prüfen";
+  document.getElementById('next-btn').onclick = checkAnswer;
 }
 
-function buildMC(q) {
-  const letters = ['A','B','C','D'];
-  return `
-    <div class="question-text">${esc(q.q)}</div>
-    <div class="mc-options" id="mc-options">
-      ${q.opts.map((o,i) => `
-        <div class="mc-option" id="mc-${i}" onclick="selectMC(${i})">
-          <div class="mc-letter">${letters[i]}</div>
-          <span>${esc(o)}</span>
-        </div>`).join('')}
-    </div>`;
-}
-
-function buildFIB(q) {
-  return `
-    <div class="question-text">${esc(q.q).replace('___','<span class="blank"></span>')}</div>
-    <div class="fib-container">
-      <span style="font-size:1rem;color:var(--text2)">Deine Antwort: </span>
-      <input class="fib-input" id="fib-answer" placeholder="Antwort eingeben..." autocomplete="off" autocorrect="off" spellcheck="false" onkeydown="if(event.key==='Enter')submitQuestion()">
-    </div>`;
-}
-
-function buildDND(q) {
-  const parts = q.sentence.map((w,i) => {
-    if(w === '___') return `<span class="drop-zone" id="dz-${i}" data-idx="${i}" ondragover="dzOver(event)" ondrop="dzDrop(event,${i})" ondragenter="dzEnter(event)" ondragleave="dzLeave(event)">&nbsp;&nbsp;&nbsp;</span>`;
-    return `<span style="margin:0 3px">${esc(w)}</span>`;
-  }).join(' ');
-
-  const shuffled = [...q.words].sort(()=>Math.random()-0.5);
-  return `
-    <div class="question-text">Ziehe das richtige Wort in die Lücke:</div>
-    <div class="dnd-sentence">${parts}</div>
-    <div class="drag-words" id="drag-words-area">
-      ${shuffled.map((w,i) => `<div class="drag-word" id="dw-${i}" draggable="true" data-word="${esc(w)}" ondragstart="dwStart(event)">${esc(w)}</div>`).join('')}
-    </div>`;
-}
-
-function buildReorder(q) {
-  const shuffled = [...q.words].sort(()=>Math.random()-0.5);
-  return `
-    <div class="question-text">Bringe die Wörter in die richtige Reihenfolge:</div>
-    <div class="reorder-target" id="reorder-target" ondragover="reorderOver(event)" ondrop="reorderDrop(event)">
-      <span style="color:var(--text3);font-size:0.85rem" id="reorder-placeholder">Wörter hierher ziehen...</span>
-    </div>
-    <div style="height:12px"></div>
-    <div class="reorder-words" id="reorder-source">
-      ${shuffled.map((w,i) => `<div class="reorder-word" id="rw-${i}" draggable="true" data-word="${esc(w)}" data-src="source" ondragstart="reorderDragStart(event)" onclick="reorderClick(this,'source')">${esc(w)}</div>`).join('')}
-    </div>
-    <div style="font-size:0.8rem;color:var(--text3);margin-top:10px;text-align:center">Klicke auf Wörter oder ziehe sie in die richtige Position</div>`;
-}
-
-function buildError(q) {
-  const words = q.sentence.split(' ');
-  const wordHtml = words.map((w,i) => `<span class="error-word" id="ew-${i}" onclick="selectError(${i},'${w.replace(/'/g,"\\'")}','${q.errorWord.replace(/'/g,"\\'")}','${q.correction.replace(/'/g,"\\'")}',this)">${esc(w)}</span>`).join(' ');
-  return `
-    <div class="question-text">Finde und klicke auf das falsche Wort:</div>
-    <div class="error-sentence" id="error-sentence">${wordHtml}</div>
-    <div id="error-correction" style="display:none;margin-top:12px"></div>`;
-}
-
-/* DND events */
-let dzCurrentWord = null;
-let dzCurrentEl = null;
-let dzFilledWord = null;
-
-function attachDndEvents(q) { /* events attached inline */ }
-
-function dwStart(e) {
-  dzCurrentWord = e.target.dataset.word;
-  dzCurrentEl = e.target;
-  e.target.classList.add('dragging');
-  e.dataTransfer.effectAllowed = 'move';
-}
-function dzOver(e) { e.preventDefault(); }
-function dzEnter(e) { e.currentTarget.classList.add('drag-over'); }
-function dzLeave(e) { e.currentTarget.classList.remove('drag-over'); }
-function dzDrop(e, idx) {
-  e.preventDefault();
-  const dz = e.currentTarget;
-  dz.classList.remove('drag-over');
-  if(dzCurrentEl) dzCurrentEl.classList.add('used');
-  dz.textContent = dzCurrentWord;
-  dz.classList.add('filled');
-  dz.dataset.answer = dzCurrentWord;
-}
-
-/* Reorder events */
-let reorderPlaced = [];
-let reorderDragWord = null;
-let reorderDragSrc = null;
-
-function attachReorderEvents(q) { reorderPlaced = []; }
-
-function reorderDragStart(e) {
-  reorderDragWord = e.target.dataset.word;
-  reorderDragSrc = e.target.dataset.src;
-  e.target.style.opacity = '0.4';
-}
-function reorderOver(e) { e.preventDefault(); }
-function reorderDrop(e) {
-  e.preventDefault();
-  if(!reorderDragWord) return;
-  reorderPlaced.push(reorderDragWord);
-  renderReorderTarget();
-  document.querySelectorAll('[data-src="source"]').forEach(el => { if(el.dataset.word===reorderDragWord) el.style.display='none'; });
-  reorderDragWord = null;
-}
-function reorderClick(el, src) {
-  if(src === 'source') {
-    reorderPlaced.push(el.dataset.word);
-    el.style.display = 'none';
-    renderReorderTarget();
-  }
-}
-function renderReorderTarget() {
-  const t = document.getElementById('reorder-target');
-  const ph = document.getElementById('reorder-placeholder');
-  if(ph && reorderPlaced.length > 0) ph.style.display = 'none';
-  t.querySelectorAll('.placed-word').forEach(e=>e.remove());
-  reorderPlaced.forEach((w,i) => {
-    const el = document.createElement('div');
-    el.className = 'reorder-word placed';
-    el.textContent = w;
-    el.dataset.word = w;
-    el.onclick = () => {
-      reorderPlaced.splice(i,1);
-      document.querySelectorAll('[data-src="source"]').forEach(se => { if(se.dataset.word===w) se.style.display=''; });
-      renderReorderTarget();
-    };
-    el.classList.add('placed-word');
-    t.appendChild(el);
-  });
-}
-
-/* Error events */
-let errorSelected = null;
-function selectError(idx, word, errorWord, correction, el) {
-  document.querySelectorAll('.error-word').forEach(e => e.classList.remove('selected-error','correct-error'));
-  if(errorSelected === idx) { errorSelected = null; return; }
-  errorSelected = idx;
-  el.classList.add('selected-error');
-}
-
-function attachErrorEvents(q) { errorSelected = null; }
-
+let selectedMc = null;
 function selectMC(i) {
+  selectedMc = i;
   document.querySelectorAll('.mc-option').forEach(el => el.classList.remove('selected'));
-  document.getElementById('mc-' + i).classList.add('selected');
+  document.getElementById(`mc-${i}`).classList.add('selected');
 }
 
-/* ============================================================
-   SUBMIT & SCORING
-   ============================================================ */
-function submitQuestion() {
-  const state = testState;
-  const q = state.questions[state.currentQ];
-  clearInterval(state.timerInterval);
-
+function checkAnswer() {
+  const qData = GRAMMAR_DATA[currentState.currentStructure][currentState.questionIdx];
   let isCorrect = false;
-  let userAnswer = '';
 
-  switch(q.type) {
-    case 'mc': {
-      const sel = document.querySelector('.mc-option.selected');
-      if(!sel) { toast('Bitte eine Antwort auswählen!', 'warning'); startTimer(); return; }
-      const idx = parseInt(sel.id.split('-')[1]);
-      userAnswer = q.opts[idx];
-      isCorrect = idx === q.ans;
-      // Highlight
-      document.querySelectorAll('.mc-option').forEach((el,i) => {
-        el.style.pointerEvents='none';
-        if(i===q.ans) el.classList.add('correct');
-        else if(el.classList.contains('selected') && i!==q.ans) el.classList.add('wrong');
-      });
-      break;
-    }
-    case 'fib': {
-      const inp = document.getElementById('fib-answer');
-      userAnswer = inp.value.trim();
-      if(!userAnswer) { toast('Bitte eine Antwort eingeben!', 'warning'); startTimer(); return; }
-      isCorrect = normalize(userAnswer) === normalize(q.ans);
-      inp.classList.add(isCorrect?'correct':'wrong');
-      inp.disabled = true;
-      break;
-    }
-    case 'dnd': {
-      const dz = document.querySelector('.drop-zone.filled');
-      userAnswer = dz ? dz.dataset.answer : '';
-      if(!userAnswer) { toast('Bitte ein Wort in die Lücke ziehen!', 'warning'); startTimer(); return; }
-      isCorrect = normalize(userAnswer) === normalize(q.ans);
-      document.querySelectorAll('.drop-zone').forEach(z => {
-        if(z.dataset.answer) z.classList.add(isCorrect?'correct':'wrong');
-      });
-      document.querySelectorAll('.drag-word').forEach(w => w.style.pointerEvents='none');
-      break;
-    }
-    case 'reorder': {
-      userAnswer = reorderPlaced.join(' ');
-      if(reorderPlaced.length === 0) { toast('Bitte Wörter in die richtige Reihenfolge bringen!', 'warning'); startTimer(); return; }
-      isCorrect = userAnswer.replace(/\s+/g,' ').trim().toLowerCase() === q.correct.join(' ').toLowerCase();
-      document.querySelectorAll('.placed-word').forEach(el => {
-        el.style.borderColor = isCorrect ? 'var(--green)' : 'var(--red)';
-        el.style.color = isCorrect ? 'var(--green)' : 'var(--red)';
-        el.onclick = null;
-      });
-      break;
-    }
-    case 'error': {
-      if(errorSelected === null) { toast('Bitte ein Wort anklicken!', 'warning'); startTimer(); return; }
-      const words = q.sentence.split(' ');
-      const clickedWord = words[errorSelected];
-      isCorrect = clickedWord.replace(/[^a-zA-Z]/g,'').toLowerCase() === q.errorWord.replace(/[^a-zA-Z]/g,'').toLowerCase();
-      userAnswer = clickedWord;
-      // Show correction
-      document.querySelectorAll('.error-word').forEach((el,i) => {
-        const w = words[i];
-        if(w.replace(/[^a-zA-Z]/g,'').toLowerCase() === q.errorWord.replace(/[^a-zA-Z]/g,'').toLowerCase()) {
-          el.classList.add('correct-error');
-        } else if(i === errorSelected && !isCorrect) {
-          el.classList.add('selected-error');
-        }
-      });
-      const corrDiv = document.getElementById('error-correction');
-      corrDiv.style.display = 'block';
-      corrDiv.innerHTML = `<div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:8px;padding:12px;font-size:0.9rem">
-        ✅ Korrektur: "${esc(q.errorWord)}" → "<strong style="color:var(--green)">${esc(q.correction)}</strong>"</div>`;
-      break;
-    }
+  if(qData.type === 'mc') {
+    isCorrect = (selectedMc === qData.ans);
+  } else if(qData.type === 'fib') {
+    isCorrect = (document.getElementById('fib-ans').value.toLowerCase().trim() === qData.ans.toLowerCase());
+  } else if(qData.type === 'reorder') {
+    isCorrect = (document.getElementById('reorder-ans').value.replace(/[.?]/g,'').toLowerCase().trim() === qData.correct.join(' ').replace(/[.?]/g,'').toLowerCase().trim());
+  } else if(qData.type === 'error') {
+    isCorrect = (document.getElementById('error-ans').value.toLowerCase().trim() === qData.correction.toLowerCase());
   }
 
-  // XP & streak
-  let xpGain = 0;
-  if(isCorrect) {
-    state.streak++;
-    state.maxStreak = Math.max(state.maxStreak, state.streak);
-    xpGain = 10 + (state.streak > 2 ? 5 : 0) + (state.timerLeft > 20 ? 5 : 0);
-    state.xp += xpGain;
-    showXpPopup(xpGain);
-    if(state.streak > 0 && state.streak % 3 === 0) showStreakBonus(state.streak);
-  } else {
-    state.streak = 0;
-  }
+  if(!currentState.score[currentState.currentStructure]) currentState.score[currentState.currentStructure] = 0;
+  if(isCorrect) currentState.score[currentState.currentStructure]++;
 
-  document.getElementById('streak-num').textContent = state.streak;
-  document.getElementById('xp-num').textContent = state.xp;
-  document.getElementById('xp-bar').style.width = Math.min((state.xp % 100), 100) + '%';
+  currentState.allAnswers.push({ structure: currentState.currentStructure, level: qData.level, correct: isCorrect });
 
-  // Feedback
-  const fb = document.getElementById('feedback-area');
-  if(fb) {
-    fb.innerHTML = `<div class="feedback-flash ${isCorrect?'correct':'wrong'}">
-      ${isCorrect ? '🎉 Richtig!' : '❌ Leider falsch.'}
-      ${!isCorrect && q.ans !== undefined && q.opts ? `<span style="font-size:0.85rem;opacity:0.8">Richtig: "${esc(q.opts[q.ans])}"</span>` : ''}
-      ${!isCorrect && q.ans !== undefined && q.type === 'fib' ? `<span style="font-size:0.85rem;opacity:0.8">Richtig: "${esc(q.ans)}"</span>` : ''}
-    </div>`;
-  }
-
-  // Record answer
-  state.answers.push({ q, isCorrect, userAnswer, correct: getCorrectAnswer(q) });
-
-  // Disable submit
-  const btn = document.getElementById('submit-q-btn');
-  if(btn) { btn.textContent = state.currentQ+1 < state.questions.length ? 'Weiter →' : 'Abschließen ✓'; btn.onclick = nextQuestion; }
-}
-
-function getCorrectAnswer(q) {
-  switch(q.type) {
-    case 'mc': return q.opts[q.ans];
-    case 'fib': return q.ans;
-    case 'dnd': return q.ans;
-    case 'reorder': return q.correct.join(' ');
-    case 'error': return `"${q.errorWord}" → "${q.correction}"`;
-    default: return q.ans || '';
-  }
-}
-
-function normalize(str) {
-  return str.trim().toLowerCase()
-    .replace(/['']/g,"'")
-    .replace(/\s+/g,' ')
-    .replace(/[.!?,]/g,'');
-}
-
-function nextQuestion() {
-  testState.currentQ++;
-  if(testState.currentQ >= testState.questions.length) {
-    finishTest();
+  // Nächste Frage Logik
+  currentState.questionIdx++;
+  if(currentState.questionIdx >= 5) {
+    currentState.questionIdx = 0;
+    const structures = Object.keys(GRAMMAR_DATA);
+    const nextIdx = structures.indexOf(currentState.currentStructure) + 1;
+    if(nextIdx < structures.length) {
+      currentState.currentStructure = structures[nextIdx];
+      renderQuestion();
+    } else {
+      finishTest();
+    }
   } else {
     renderQuestion();
   }
 }
 
-function startTimer() {
-  clearInterval(testState.timerInterval);
-  testState.timerLeft = 30;
-  updateTimerDisplay();
-  testState.timerInterval = setInterval(() => {
-    testState.timerLeft--;
-    updateTimerDisplay();
-    if(testState.timerLeft <= 0) {
-      clearInterval(testState.timerInterval);
-      // auto-submit as wrong
-      testState.answers.push({ q: testState.questions[testState.currentQ], isCorrect: false, userAnswer: '(Zeit abgelaufen)', correct: getCorrectAnswer(testState.questions[testState.currentQ]) });
-      testState.streak = 0;
-      const fb = document.getElementById('feedback-area');
-      if(fb) fb.innerHTML = `<div class="feedback-flash wrong">⏰ Zeit abgelaufen!</div>`;
-      const btn = document.getElementById('submit-q-btn');
-      if(btn) { btn.textContent = testState.currentQ+1 < testState.questions.length ? 'Weiter →' : 'Abschließen ✓'; btn.onclick = nextQuestion; }
-    }
-  }, 1000);
-}
-
-function updateTimerDisplay() {
-  const el = document.getElementById('timer-num');
-  const disp = document.getElementById('timer-display');
-  if(!el) return;
-  el.textContent = testState.timerLeft;
-  disp.className = 'timer-display' + (testState.timerLeft <= 10 ? ' danger' : testState.timerLeft <= 20 ? ' warning' : '');
-}
-
-/* ============================================================
-   XP ANIMATIONS
-   ============================================================ */
-function showXpPopup(xp) {
-  const el = document.createElement('div');
-  el.className = 'xp-popup';
-  el.textContent = `+${xp} XP`;
-  el.style.cssText = `left:${Math.random()*60+20}%;top:${Math.random()*30+30}%`;
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 1300);
-}
-
-function showStreakBonus(streak) {
-  openModal(`
-    <div style="text-align:center">
-      <div class="level-up-icon">🔥</div>
-      <div class="level-up-title">${streak}er Streak!</div>
-      <div style="color:var(--text2);margin:12px 0">Bonus XP freigeschaltet! Keep going!</div>
-      <button class="btn btn-primary" style="margin-top:16px" onclick="closeModalDirect()">Weiter! 💪</button>
-    </div>`);
-  setTimeout(closeModalDirect, 2000);
-}
-
-/* ============================================================
-   FINISH TEST & RESULTS
-   ============================================================ */
 function finishTest() {
-  clearInterval(testState.timerInterval);
-  const state = testState;
-  const total = state.answers.length;
-  const correct = state.answers.filter(a=>a.isCorrect).length;
-  const score = Math.round((correct/total)*100);
-  const timeSecs = Math.round((Date.now() - state.startTime) / 1000);
-
-  // Determine achieved level
-  const g = state.groupObj;
-  const targetLevel = g.level;
-  let achievedLevel = 'A2';
-  if(score >= 85) achievedLevel = targetLevel;
-  else if(score >= 70) achievedLevel = {A2:'A2',B1:'A2',B2:'B1',C1:'B2'}[targetLevel]||'B1';
-  else if(score >= 55) achievedLevel = {A2:'A2',B1:'A2',B2:'A2',C1:'B1'}[targetLevel]||'A2';
-
-  // Per-grammar stats
-  const grammarStats = {};
-  state.answers.forEach(a => {
-    const g2 = a.q.grammar || 'Sonstige';
-    if(!grammarStats[g2]) grammarStats[g2] = {correct:0,total:0};
-    grammarStats[g2].total++;
-    if(a.isCorrect) grammarStats[g2].correct++;
-  });
-
-  // Save result
-  if(g.id !== 'demo') {
-    const targetGroup = groups.find(gr=>gr.id===g.id);
-    if(targetGroup) {
-      if(!targetGroup.students) targetGroup.students = [];
-      targetGroup.students.push({
-        name: state.studentName, score, correct, total,
-        xp: state.xp, maxStreak: state.maxStreak,
-        timeSecs, achievedLevel, date: Date.now()
-      });
-      saveGroups();
-    }
-  }
-
-  // Confetti for good scores
-  if(score >= 70) spawnConfetti();
-
-  // Build results screen
   showScreen('results-screen');
-  const levelColors = {A2:'var(--a2)',B1:'var(--b1)',B2:'var(--b2)',C1:'var(--c1)'};
-  const levelDescs = {A2:'Grundkenntnisse',B1:'Fortgeschrittene Grundkenntnisse',B2:'Selbstständig',C1:'Kompetente Verwendung'};
+  const content = document.getElementById('results-content');
+  
+  // Berechnung der Empfehlung
+  let recommendations = [];
+  let summaryTextDE = `Hallo ${currentState.name}, vielen Dank für deinen Test. `;
+  let summaryTextEN = `Hello ${currentState.name}, thank you for taking the test. `;
 
-  const skillBarsHtml = Object.entries(grammarStats).map(([gr, st]) => {
-    const pct = Math.round((st.correct/st.total)*100);
-    const color = pct>=80?'var(--green)':pct>=60?'var(--yellow)':'var(--red)';
-    return `<div class="skill-bar">
-      <div class="skill-bar-header"><span class="skill-bar-name">${esc(gr)}</span><span class="skill-bar-pct">${st.correct}/${st.total} (${pct}%)</span></div>
-      <div class="progress-bar"><div style="height:100%;width:${pct}%;background:${color};border-radius:99px;transition:width 1s;box-shadow:0 0 8px ${color}40"></div></div>
-    </div>`;
-  }).join('');
-
-  const reviewHtml = state.answers.map((a,i) => `
-    <div class="review-item">
-      <div class="review-icon">${a.isCorrect?'✅':'❌'}</div>
-      <div class="review-content">
-        <div style="font-size:0.75rem;color:var(--neon2);font-weight:700;margin-bottom:4px">${esc(a.q.grammar||'')}</div>
-        <div class="review-q">${esc(a.q.q||a.q.sentence||'')}</div>
-        <div class="review-your">Deine Antwort: <span class="${a.isCorrect?'review-correct':''}; color:${a.isCorrect?'var(--green)':'var(--red)'}">${esc(a.userAnswer||'–')}</span></div>
-        ${!a.isCorrect?`<div class="review-correct">✓ Richtig: ${esc(a.correct||'')}</div>`:''}
-      </div>
-      <div><span class="review-badge ${a.isCorrect?'review-badge-correct':'review-badge-wrong'}">${a.isCorrect?'+XP':'Falsch'}</span></div>
-    </div>`).join('');
-
-  document.getElementById('results-content').innerHTML = `
-    <div class="results-card">
-      <div class="results-hero">
-        <div class="results-level-badge">🎓 ${esc(state.studentName)} · ${esc(g.name)}</div>
-        <div class="results-level-name">${achievedLevel}</div>
-        <div style="font-size:1rem;color:var(--text2);margin-bottom:8px">${levelDescs[achievedLevel]||''}</div>
-        <div class="results-student-name">Super gemacht, ${esc(state.studentName)}!</div>
-        <div class="results-stats">
-          <div class="result-stat"><div class="result-stat-val">${score}%</div><div class="result-stat-label">Gesamt-Score</div></div>
-          <div class="result-stat"><div class="result-stat-val">${correct}/${total}</div><div class="result-stat-label">Richtige Antworten</div></div>
-          <div class="result-stat"><div class="result-stat-val">⚡${state.xp}</div><div class="result-stat-label">XP verdient</div></div>
-        </div>
-      </div>
-      <div class="results-body">
-        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:28px">
-          <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:14px 20px;display:flex;gap:10px;align-items:center">
-            <span style="font-size:1.5rem">🔥</span>
-            <div><div style="font-family:var(--font-head);font-size:1.3rem;font-weight:800;color:var(--yellow)">${state.maxStreak}</div><div style="font-size:0.75rem;color:var(--text3)">Bester Streak</div></div>
-          </div>
-          <div style="background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:14px 20px;display:flex;gap:10px;align-items:center">
-            <span style="font-size:1.5rem">⏱</span>
-            <div><div style="font-family:var(--font-head);font-size:1.3rem;font-weight:800;color:var(--cyan)">${timeSecs}s</div><div style="font-size:0.75rem;color:var(--text3)">Gesamtzeit</div></div>
-          </div>
-          <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:14px 20px;flex:1">
-            <div style="font-size:0.78rem;color:var(--text3);margin-bottom:6px">Rückmeldung</div>
-            <div style="font-size:0.92rem;line-height:1.6">${getFeedback(score, achievedLevel, targetLevel)}</div>
-          </div>
-        </div>
-
-        <div class="results-section-title">📊 Leistung je Struktur</div>
-        <div class="skill-bars" id="skill-bars-container">${skillBarsHtml}</div>
-
-        <div class="results-section-title" style="margin-top:32px">
-          🔍 Detailansicht
-          <div class="tab-bar" style="max-width:260px;margin-left:auto">
-            <button class="tab-bar-btn active" id="rv-all" onclick="filterReview('all')">Alle</button>
-            <button class="tab-bar-btn" id="rv-wrong" onclick="filterReview('wrong')">Falsch</button>
-            <button class="tab-bar-btn" id="rv-correct" onclick="filterReview('correct')">Richtig</button>
-          </div>
-        </div>
-        <div class="review-list" id="review-list">${reviewHtml}</div>
-
-        <div style="display:flex;gap:12px;margin-top:32px;flex-wrap:wrap">
-          <button class="btn btn-primary btn-lg" onclick="showScreen('landing-screen')">🏠 Startseite</button>
-          <button class="btn btn-secondary" onclick="window.print()">🖨️ Ergebnis drucken</button>
-        </div>
-      </div>
-    </div>`;
-
-  // Animate skill bars after render
-  setTimeout(() => {
-    document.querySelectorAll('#skill-bars-container .progress-bar div').forEach(el => {
-      const w = el.style.width;
-      el.style.width = '0%';
-      requestAnimationFrame(() => { el.style.width = w; });
-    });
-  }, 100);
-}
-
-function filterReview(mode) {
-  ['all','wrong','correct'].forEach(m => document.getElementById(`rv-${m}`)?.classList.toggle('active', m===mode));
-  const items = document.querySelectorAll('.review-item');
-  items.forEach((el,i) => {
-    const isCorrect = testState.answers[i]?.isCorrect;
-    if(mode==='all') el.style.display='';
-    else if(mode==='correct' && isCorrect) el.style.display='';
-    else if(mode==='wrong' && !isCorrect) el.style.display='';
-    else el.style.display='none';
+  Object.keys(currentState.score).forEach(s => {
+    const val = currentState.score[s];
+    if(val < 3) {
+      recommendations.push(s);
+    }
   });
-}
 
-function getFeedback(score, achieved, target) {
-  if(score >= 85) return `🌟 Ausgezeichnet! Du hast das Niveau <strong style="color:var(--green)">${achieved}</strong> erreicht – genau wie angestrebt. Weiter so!`;
-  if(score >= 70) return `👍 Gute Leistung! Du zeigst solide Kenntnisse auf <strong style="color:var(--yellow)">${achieved}</strong>-Niveau. Übe die markierten Bereiche noch etwas mehr.`;
-  if(score >= 55) return `💪 Solider Start! Du bist auf <strong style="color:var(--yellow)">${achieved}</strong>-Niveau. Mit etwas mehr Übung erreichst du bald das Ziel!`;
-  return `📚 Noch etwas Übung nötig. Fokussiere dich auf die Bereiche mit rotem Balken. Du schaffst das!`;
-}
-
-/* ============================================================
-   CONFETTI
-   ============================================================ */
-function spawnConfetti() {
-  const colors = ['#7c3aed','#06b6d4','#10b981','#f59e0b','#ec4899','#f1f0ff'];
-  for(let i=0;i<60;i++) {
-    const el = document.createElement('div');
-    el.className = 'confetti-piece';
-    el.style.cssText = `left:${Math.random()*100}vw;top:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${2+Math.random()*3}s;animation-delay:${Math.random()*1.5}s;transform:rotate(${Math.random()*360}deg);border-radius:${Math.random()>.5?'50%':'2px'}`;
-    document.body.appendChild(el);
-    setTimeout(()=>el.remove(), 6000);
+  let recHtml = "";
+  if(recommendations.length > 0) {
+    summaryTextDE += "Du hast tolle Ansätze gezeigt. Besonders bei den folgenden Themen kannst du dich noch verbessern:";
+    summaryTextEN += "You showed great effort. You can improve especially in the following areas:";
+    recHtml = `<ul class="recommendation-list">` + recommendations.map(r => `<li><strong>${r}</strong></li>`).join('') + `</ul>`;
+  } else {
+    summaryTextDE += "Hervorragend! Du beherrschst alle getesteten Strukturen sicher.";
+    summaryTextEN += "Excellent! You have a solid grasp of all tested structures.";
+    recHtml = "<p>Keine spezifischen Wiederholungen nötig. Well done!</p>";
   }
+
+  content.innerHTML = `
+    <h2 style="font-family:var(--font-head); color:var(--neon2)">Dein Ergebnis</h2>
+    <p style="margin:20px 0;">Hier ist deine individuelle Auswertung:</p>
+    <div style="background:var(--surface2); padding:20px; border-radius:10px;">
+      <p id="rec-text-de">${summaryTextDE}</p>
+      ${recHtml}
+    </div>
+    <div class="audio-controls">
+      <button class="btn btn-secondary" onclick="speak('de')">Listen (DE) 🇩🇪</button>
+      <button class="btn btn-secondary" onclick="speak('en')">Listen (EN) 🇺🇸</button>
+    </div>
+    <button class="btn btn-primary" style="margin-top:30px;" onclick="location.reload()">Zur Startseite</button>
+  `;
+
+  // Daten für Lehrer speichern
+  saveToTeacher(summaryTextDE);
 }
 
-/* ============================================================
-   UTILS
-   ============================================================ */
-function esc(str) {
-  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function speak(lang) {
+  const text = document.getElementById('rec-text-de').innerText; // Vereinfacht für Demo
+  const msg = new SpeechSynthesisUtterance();
+  msg.text = text;
+  msg.lang = lang === 'de' ? 'de-DE' : 'en-US';
+  window.speechSynthesis.speak(msg);
+}
+
+function saveToTeacher(summary) {
+  let db = JSON.parse(localStorage.getItem('linguaResults') || '[]');
+  const totalCorrect = Object.values(currentState.score).reduce((a, b) => a + b, 0);
+  db.push({
+    name: currentState.name,
+    score: `${totalCorrect} / ${Object.keys(GRAMMAR_DATA).length * 5}`,
+    details: currentState.score,
+    date: new Date().toLocaleString()
+  });
+  localStorage.setItem('linguaResults', JSON.stringify(db));
+}
+
+function teacherInit() {
+  const db = JSON.parse(localStorage.getItem('linguaResults') || '[]');
+  const container = document.getElementById('teacher-results-container');
+  
+  if(db.length === 0) {
+    container.innerHTML = "<p>Noch keine Teilnehmer.</p>";
+    return;
+  }
+
+  let html = `<table class="results-table">
+    <tr><th>Datum</th><th>Name</th><th>Gesamtscore</th><th>Details</th></tr>`;
+  
+  db.forEach(entry => {
+    let details = Object.entries(entry.details).map(([k,v]) => `${k}: ${v}/5`).join(', ');
+    html += `<tr>
+      <td>${entry.date}</td>
+      <td><strong>${entry.name}</strong></td>
+      <td>${entry.score}</td>
+      <td style="color:var(--text2); font-size:0.8rem;">${details}</td>
+    </tr>`;
+  });
+  html += `</table>`;
+  container.innerHTML = html;
 }
 </script>
 </body>
