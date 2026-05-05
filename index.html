@@ -17,7 +17,7 @@
   --surface3: #252538;
   --border: rgba(255,255,255,0.07);
   --border2: rgba(255,255,255,0.13);
-
+ 
   --neon: #7c3aed;
   --neon2: #a855f7;
   --neon-glow: rgba(124,58,237,0.35);
@@ -30,30 +30,30 @@
   --red: #ef4444;
   --red-glow: rgba(239,68,68,0.3);
   --pink: #ec4899;
-
+ 
   --text: #f1f0ff;
   --text2: rgba(241,240,255,0.55);
   --text3: rgba(241,240,255,0.3);
-
+ 
   --r-sm: 10px;
   --r-md: 16px;
   --r-lg: 24px;
   --r-xl: 32px;
-
+ 
   --font-head: 'Syne', sans-serif;
   --font-body: 'DM Sans', sans-serif;
-
+ 
   /* Level colors */
   --a2: #06b6d4;
   --b1: #10b981;
   --b2: #f59e0b;
   --c1: #ec4899;
 }
-
+ 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
 html { scroll-behavior: smooth; }
-
+ 
 body {
   font-family: var(--font-body);
   background: var(--bg);
@@ -62,7 +62,7 @@ body {
   overflow-x: hidden;
   line-height: 1.6;
 }
-
+ 
 /* ============================================================
    BACKGROUND EFFECTS
    ============================================================ */
@@ -73,26 +73,26 @@ body {
     linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px);
   background-size: 60px 60px;
 }
-
+ 
 .bg-orb {
   position: fixed; border-radius: 50%; pointer-events: none; filter: blur(90px); z-index: 0;
 }
 .bg-orb-1 { width: 600px; height: 600px; background: rgba(124,58,237,0.12); top: -200px; right: -200px; }
 .bg-orb-2 { width: 400px; height: 400px; background: rgba(6,182,212,0.08); bottom: -100px; left: -100px; }
 .bg-orb-3 { width: 300px; height: 300px; background: rgba(236,72,153,0.07); top: 50%; left: 40%; }
-
+ 
 /* ============================================================
    LAYOUT
    ============================================================ */
 #app { position: relative; z-index: 1; }
-
+ 
 .screen { display: none; min-height: 100vh; }
 .screen.active { display: flex; flex-direction: column; }
-
+ 
 /* ============================================================
    COMPONENTS
    ============================================================ */
-
+ 
 /* --- Buttons --- */
 .btn {
   display: inline-flex; align-items: center; gap: 8px;
@@ -133,7 +133,7 @@ body {
 .btn-ghost:hover { border-color: var(--border2); color: var(--text); background: var(--surface2); }
 .btn-danger { background: linear-gradient(135deg, #b91c1c, var(--red)); color: white; }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
-
+ 
 /* --- Cards --- */
 .card {
   background: var(--surface);
@@ -148,7 +148,7 @@ body {
   padding: 28px;
   box-shadow: 0 0 40px rgba(124,58,237,0.08);
 }
-
+ 
 /* --- Inputs --- */
 .input {
   background: var(--surface2);
@@ -160,13 +160,13 @@ body {
 }
 .input:focus { border-color: var(--neon); box-shadow: 0 0 16px var(--neon-glow); }
 .input::placeholder { color: var(--text3); }
-
+ 
 select.input { cursor: pointer; }
 select.input option { background: var(--surface2); }
-
+ 
 .form-group { display: flex; flex-direction: column; gap: 8px; }
 .form-label { font-size: 0.82rem; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; }
-
+ 
 /* --- Badges --- */
 .badge {
   display: inline-flex; align-items: center; gap: 5px;
@@ -178,7 +178,7 @@ select.input option { background: var(--surface2); }
 .badge-b2 { background: rgba(245,158,11,0.15); color: var(--b2); border: 1px solid rgba(245,158,11,0.3); }
 .badge-c1 { background: rgba(236,72,153,0.15); color: var(--c1); border: 1px solid rgba(236,72,153,0.3); }
 .badge-neon { background: rgba(124,58,237,0.15); color: var(--neon2); border: 1px solid rgba(124,58,237,0.3); }
-
+ 
 /* --- Tags --- */
 .tag {
   display: inline-flex; align-items: center; gap: 6px;
@@ -191,7 +191,7 @@ select.input option { background: var(--surface2); }
 .tag.selected { background: rgba(124,58,237,0.2); border-color: var(--neon); color: var(--neon2); }
 .tag-remove { cursor: pointer; opacity: 0.5; transition: opacity 0.15s; }
 .tag-remove:hover { opacity: 1; color: var(--red); }
-
+ 
 /* --- Progress --- */
 .progress-bar {
   height: 6px; background: var(--surface3); border-radius: 99px; overflow: hidden;
@@ -202,7 +202,7 @@ select.input option { background: var(--surface2); }
   transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: 0 0 10px var(--neon-glow);
 }
-
+ 
 /* --- Toast --- */
 .toast-container {
   position: fixed; top: 20px; right: 20px; z-index: 9999;
@@ -219,10 +219,10 @@ select.input option { background: var(--surface2); }
 }
 .toast.success { border-color: rgba(16,185,129,0.4); }
 .toast.error { border-color: rgba(239,68,68,0.4); }
-
+ 
 @keyframes toast-in { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 @keyframes toast-out { to { opacity: 0; transform: translateX(20px); } }
-
+ 
 /* --- Tooltip --- */
 .tooltip { position: relative; }
 .tooltip-text {
@@ -235,7 +235,7 @@ select.input option { background: var(--surface2); }
   transition: opacity 0.2s; pointer-events: none; z-index: 100;
 }
 .tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
-
+ 
 /* --- Modal --- */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 500;
@@ -252,7 +252,7 @@ select.input option { background: var(--surface2); }
   max-height: 90vh; overflow-y: auto;
 }
 .modal-overlay.open .modal { transform: scale(1); }
-
+ 
 /* ============================================================
    NAVIGATION BAR
    ============================================================ */
@@ -284,7 +284,7 @@ select.input option { background: var(--surface2); }
   display: flex; align-items: center; justify-content: center;
   font-size: 0.75rem; font-weight: 700; color: white;
 }
-
+ 
 /* ============================================================
    LANDING / HOME SCREEN
    ============================================================ */
@@ -292,9 +292,9 @@ select.input option { background: var(--surface2); }
   align-items: center; justify-content: center;
   padding: 40px 20px;
 }
-
+ 
 .landing-hero { text-align: center; max-width: 700px; }
-
+ 
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 6px 16px; border-radius: 99px;
@@ -311,7 +311,7 @@ select.input option { background: var(--surface2); }
   0%,100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.5; transform: scale(0.7); }
 }
-
+ 
 .hero-title {
   font-family: var(--font-head); font-size: clamp(2.8rem, 6vw, 5rem);
   font-weight: 800; line-height: 1.05; margin-bottom: 20px;
@@ -321,13 +321,13 @@ select.input option { background: var(--surface2); }
   background: linear-gradient(135deg, var(--neon2), var(--cyan), var(--green));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-
+ 
 .hero-desc {
   font-size: 1.1rem; color: var(--text2); margin-bottom: 40px; line-height: 1.8;
 }
-
+ 
 .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; }
-
+ 
 .level-cards {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
   max-width: 700px; margin: 0 auto;
@@ -351,19 +351,19 @@ select.input option { background: var(--surface2); }
   font-family: var(--font-head); font-size: 1.3rem; font-weight: 800; margin-bottom: 4px;
 }
 .level-card-desc { font-size: 0.75rem; color: var(--text3); }
-
+ 
 /* ============================================================
    TEACHER DASHBOARD
    ============================================================ */
 #teacher-screen {
   flex-direction: column;
 }
-
+ 
 .teacher-layout {
   display: grid; grid-template-columns: 260px 1fr;
   flex: 1; min-height: 0;
 }
-
+ 
 .sidebar {
   background: var(--surface); border-right: 1px solid var(--border);
   padding: 24px 16px; display: flex; flex-direction: column; gap: 6px;
@@ -385,7 +385,7 @@ select.input option { background: var(--surface2); }
 .sidebar-btn.active { background: rgba(124,58,237,0.15); color: var(--neon2); border: 1px solid rgba(124,58,237,0.2); }
 .sidebar-btn-icon { font-size: 1rem; flex-shrink: 0; }
 .sidebar-sep { height: 1px; background: var(--border); margin: 8px 0; }
-
+ 
 .main-panel {
   padding: 32px; overflow-y: auto; flex: 1;
 }
@@ -395,12 +395,12 @@ select.input option { background: var(--surface2); }
 }
 .panel-title { font-family: var(--font-head); font-size: 1.8rem; font-weight: 800; }
 .panel-subtitle { color: var(--text2); font-size: 0.92rem; margin-top: 4px; }
-
+ 
 /* Groups Grid */
 .groups-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;
 }
-
+ 
 .group-card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--r-lg); padding: 24px;
@@ -427,7 +427,7 @@ select.input option { background: var(--surface2); }
 .stat { display: flex; flex-direction: column; gap: 2px; }
 .stat-val { font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; color: var(--neon2); }
 .stat-label { font-size: 0.72rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; }
-
+ 
 /* Create Group Form */
 .create-group-form {
   max-width: 680px;
@@ -437,7 +437,7 @@ select.input option { background: var(--surface2); }
 }
 .section-divider-line { flex: 1; height: 1px; background: var(--border); }
 .section-divider-text { font-size: 0.78rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; white-space: nowrap; }
-
+ 
 /* Grammar structures */
 .grammar-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;
@@ -453,7 +453,7 @@ select.input option { background: var(--surface2); }
 .grammar-item.selected { background: rgba(124,58,237,0.15); border-color: var(--neon); color: var(--neon2); }
 .grammar-check { width: 18px; height: 18px; border-radius: 5px; border: 2px solid var(--border2); flex-shrink: 0; transition: all 0.15s; display: flex; align-items: center; justify-content: center; font-size: 11px; }
 .grammar-item.selected .grammar-check { background: var(--neon); border-color: var(--neon); }
-
+ 
 /* Sortable order list */
 .order-list { display: flex; flex-direction: column; gap: 8px; }
 .order-item {
@@ -473,7 +473,7 @@ select.input option { background: var(--surface2); }
   display: flex; align-items: center; justify-content: center;
   font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
 }
-
+ 
 /* Students Results Table */
 .results-table { width: 100%; border-collapse: collapse; }
 .results-table th {
@@ -485,14 +485,14 @@ select.input option { background: var(--surface2); }
 .results-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
 .results-table tr:last-child td { border-bottom: none; }
 .results-table tr:hover td { background: rgba(255,255,255,0.02); }
-
+ 
 .score-ring {
   width: 44px; height: 44px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-head); font-size: 0.85rem; font-weight: 800;
   border: 2px solid;
 }
-
+ 
 /* ============================================================
    STUDENT JOIN SCREEN
    ============================================================ */
@@ -510,12 +510,12 @@ select.input option { background: var(--surface2); }
   text-align: center; font-size: 2rem; font-family: var(--font-head); font-weight: 800;
   letter-spacing: 0.2em; text-transform: uppercase;
 }
-
+ 
 /* ============================================================
    TEST SCREEN
    ============================================================ */
 #test-screen { flex-direction: column; }
-
+ 
 .test-header {
   background: rgba(10,10,15,0.9); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
@@ -526,12 +526,12 @@ select.input option { background: var(--surface2); }
 .test-task-name { font-family: var(--font-head); font-size: 1rem; font-weight: 700; }
 .test-progress-text { font-size: 0.8rem; color: var(--text3); }
 .test-header-right { display: flex; align-items: center; gap: 16px; }
-
+ 
 .test-body {
   flex: 1; display: flex; align-items: center; justify-content: center;
   padding: 32px 20px; overflow-y: auto;
 }
-
+ 
 .question-container {
   max-width: 780px; width: 100%;
   animation: q-in 0.4s ease;
@@ -540,7 +540,7 @@ select.input option { background: var(--surface2); }
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
+ 
 .question-type-badge {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 5px 14px; border-radius: 99px;
@@ -548,7 +548,7 @@ select.input option { background: var(--surface2); }
   font-size: 0.75rem; font-weight: 700; color: var(--neon2); margin-bottom: 20px;
   letter-spacing: 0.05em; text-transform: uppercase;
 }
-
+ 
 .question-text {
   font-family: var(--font-head); font-size: clamp(1.2rem, 2.5vw, 1.6rem);
   font-weight: 700; margin-bottom: 30px; line-height: 1.4;
@@ -558,7 +558,7 @@ select.input option { background: var(--surface2); }
   background: linear-gradient(90deg, var(--neon), var(--cyan));
   border-radius: 2px; margin: 0 6px; vertical-align: middle;
 }
-
+ 
 /* Multiple choice */
 .mc-options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .mc-option {
@@ -582,7 +582,7 @@ select.input option { background: var(--surface2); }
 .mc-option.selected .mc-letter { background: var(--neon); border-color: var(--neon); color: white; }
 .mc-option.correct .mc-letter { background: var(--green); border-color: var(--green); color: white; }
 .mc-option.wrong .mc-letter { background: var(--red); border-color: var(--red); color: white; }
-
+ 
 /* Fill in the blank */
 .fib-container {
   background: var(--surface2); border: 1px solid var(--border);
@@ -600,7 +600,7 @@ select.input option { background: var(--surface2); }
 .fib-input:focus { border-color: var(--neon); }
 .fib-input.correct { border-color: var(--green); color: var(--green); }
 .fib-input.wrong { border-color: var(--red); color: var(--red); }
-
+ 
 /* Drag & Drop */
 .dnd-sentence {
   background: var(--surface2); border: 1px solid var(--border);
@@ -620,7 +620,7 @@ select.input option { background: var(--surface2); }
 .drop-zone.filled { border-color: rgba(255,255,255,0.2); background: var(--surface3); color: var(--text); border-style: solid; }
 .drop-zone.correct { border-color: var(--green); background: rgba(16,185,129,0.1); color: var(--green); }
 .drop-zone.wrong { border-color: var(--red); background: rgba(239,68,68,0.08); color: var(--red); }
-
+ 
 .drag-words {
   display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
 }
@@ -634,7 +634,7 @@ select.input option { background: var(--surface2); }
 .drag-word:hover { border-color: var(--neon); color: var(--neon2); transform: translateY(-2px); }
 .drag-word.dragging { opacity: 0.4; cursor: grabbing; }
 .drag-word.used { opacity: 0.3; pointer-events: none; }
-
+ 
 /* Matching */
 .matching-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .match-col { display: flex; flex-direction: column; gap: 10px; }
@@ -651,13 +651,13 @@ select.input option { background: var(--surface2); }
 .match-item.wrong-match { border-color: var(--red); background: rgba(239,68,68,0.08); animation: shake 0.4s; }
 .match-item.match-target { cursor: default; }
 .match-item.match-target.matched-to { border-style: dashed; opacity: 0.5; }
-
+ 
 @keyframes shake {
   0%,100% { transform: translateX(0); }
   25% { transform: translateX(-5px); }
   75% { transform: translateX(5px); }
 }
-
+ 
 /* Error correction */
 .error-sentence {
   background: var(--surface2); border: 1px solid var(--border);
@@ -674,7 +674,7 @@ select.input option { background: var(--surface2); }
 .error-word:hover { background: rgba(245,158,11,0.1); border-color: var(--yellow); }
 .error-word.selected-error { background: rgba(239,68,68,0.12); border-color: var(--red); color: var(--red); }
 .error-word.correct-error { background: rgba(16,185,129,0.1); border-color: var(--green); color: var(--green); }
-
+ 
 /* Reorder sentence */
 .reorder-words { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; min-height: 52px; padding: 12px; border-radius: var(--r-md); background: var(--surface2); border: 2px dashed var(--border2); margin-bottom: 20px; }
 .reorder-target { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; min-height: 52px; padding: 12px; border-radius: var(--r-md); background: rgba(124,58,237,0.05); border: 2px dashed rgba(124,58,237,0.2); }
@@ -685,7 +685,7 @@ select.input option { background: var(--surface2); }
 }
 .reorder-word:hover { border-color: var(--neon); color: var(--neon2); transform: translateY(-2px); }
 .reorder-word.placed { background: rgba(124,58,237,0.15); border-color: var(--neon); color: var(--neon2); }
-
+ 
 /* Feedback flash */
 .feedback-flash {
   display: flex; align-items: center; justify-content: center; gap: 12px;
@@ -694,20 +694,20 @@ select.input option { background: var(--surface2); }
 }
 .feedback-flash.correct { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); color: var(--green); }
 .feedback-flash.wrong { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); color: var(--red); }
-
+ 
 /* Navigation buttons */
 .question-nav {
   display: flex; justify-content: space-between; align-items: center;
   margin-top: 28px; flex-wrap: wrap; gap: 12px;
 }
-
+ 
 /* XP Bar */
 .xp-bar-container {
   display: flex; align-items: center; gap: 10px;
   flex: 1; max-width: 200px;
 }
 .xp-label { font-size: 0.75rem; font-weight: 700; color: var(--neon2); }
-
+ 
 /* Streak */
 .streak-badge {
   display: flex; align-items: center; gap: 6px;
@@ -715,7 +715,7 @@ select.input option { background: var(--surface2); }
   background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.3);
   font-size: 0.8rem; font-weight: 700; color: var(--yellow);
 }
-
+ 
 /* Timer */
 .timer-display {
   display: flex; align-items: center; gap: 8px;
@@ -724,12 +724,12 @@ select.input option { background: var(--surface2); }
 .timer-display.warning { color: var(--yellow); }
 .timer-display.danger { color: var(--red); animation: pulse-timer 0.5s infinite; }
 @keyframes pulse-timer { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
-
+ 
 /* ============================================================
    RESULTS SCREEN
    ============================================================ */
 #results-screen { align-items: center; justify-content: flex-start; padding: 40px 20px; }
-
+ 
 .results-card {
   max-width: 860px; width: 100%;
   background: var(--surface); border: 1px solid var(--border2);
@@ -759,7 +759,7 @@ select.input option { background: var(--surface2); }
   background-clip: text; margin-bottom: 8px;
 }
 .results-student-name { font-size: 1.3rem; font-weight: 600; color: var(--text2); margin-bottom: 28px; }
-
+ 
 .results-stats {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 16px; margin-bottom: 0;
@@ -775,20 +775,20 @@ select.input option { background: var(--surface2); }
   background-clip: text;
 }
 .result-stat-label { font-size: 0.78rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
-
+ 
 .results-body { padding: 36px; }
-
+ 
 .results-section-title {
   font-family: var(--font-head); font-size: 1.1rem; font-weight: 700;
   margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
 }
-
+ 
 .skill-bars { display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
 .skill-bar { display: flex; flex-direction: column; gap: 6px; }
 .skill-bar-header { display: flex; justify-content: space-between; font-size: 0.88rem; }
 .skill-bar-name { font-weight: 600; }
 .skill-bar-pct { color: var(--text2); }
-
+ 
 .review-list { display: flex; flex-direction: column; gap: 14px; }
 .review-item {
   background: var(--surface2); border: 1px solid var(--border);
@@ -803,7 +803,7 @@ select.input option { background: var(--surface2); }
 .review-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; }
 .review-badge-correct { background: rgba(16,185,129,0.15); color: var(--green); }
 .review-badge-wrong { background: rgba(239,68,68,0.12); color: var(--red); }
-
+ 
 /* ============================================================
    GAMIFICATION ELEMENTS
    ============================================================ */
@@ -818,7 +818,7 @@ select.input option { background: var(--surface2); }
   from { opacity: 1; transform: translateY(0) scale(1); }
   to { opacity: 0; transform: translateY(-60px) scale(1.2); }
 }
-
+ 
 .level-up-overlay {
   position: fixed; inset: 0; z-index: 8000;
   display: flex; align-items: center; justify-content: center;
@@ -835,7 +835,7 @@ select.input option { background: var(--surface2); }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 .level-up-icon { font-size: 4rem; margin-bottom: 16px; }
 .level-up-title { font-family: var(--font-head); font-size: 2rem; font-weight: 800; color: var(--yellow); margin-bottom: 8px; }
-
+ 
 /* ============================================================
    CONFETTI
    ============================================================ */
@@ -847,7 +847,7 @@ select.input option { background: var(--surface2); }
 @keyframes confetti-fall {
   to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
 }
-
+ 
 /* ============================================================
    MISC
    ============================================================ */
@@ -858,7 +858,7 @@ select.input option { background: var(--surface2); }
 }
 .empty-icon { font-size: 3rem; margin-bottom: 8px; }
 .empty-title { font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; color: var(--text2); }
-
+ 
 .tab-bar {
   display: flex; gap: 4px;
   background: var(--surface2); border: 1px solid var(--border);
@@ -870,15 +870,15 @@ select.input option { background: var(--surface2); }
   font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
 }
 .tab-bar-btn.active { background: var(--surface3); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
-
+ 
 .color-divider { height: 3px; width: 40px; border-radius: 2px; }
-
+ 
 /* scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border2); }
-
+ 
 /* Responsive */
 @media (max-width: 768px) {
   .teacher-layout { grid-template-columns: 1fr; }
@@ -897,11 +897,11 @@ select.input option { background: var(--surface2); }
 <div class="bg-orb bg-orb-1"></div>
 <div class="bg-orb bg-orb-2"></div>
 <div class="bg-orb bg-orb-3"></div>
-
+ 
 <div class="toast-container" id="toast-container"></div>
-
+ 
 <div id="app">
-
+ 
 <!-- ============================================================
      LANDING SCREEN
      ============================================================ -->
@@ -913,7 +913,7 @@ select.input option { background: var(--surface2); }
       <button class="btn btn-primary btn-sm" onclick="showScreen('teacher-screen'); teacherInit();">👩‍🏫 Als Lehrkraft</button>
     </div>
   </nav>
-
+ 
   <div class="landing-hero" style="padding: 80px 20px;">
     <div class="hero-eyebrow">
       <div class="hero-eyebrow-dot"></div>
@@ -934,7 +934,7 @@ select.input option { background: var(--surface2); }
         📋 Lehrkraft-Dashboard
       </button>
     </div>
-
+ 
     <div class="level-cards">
       <div class="level-card level-card-a2">
         <div class="level-card-icon">🌱</div>
@@ -959,7 +959,7 @@ select.input option { background: var(--surface2); }
     </div>
   </div>
 </div>
-
+ 
 <!-- ============================================================
      TEACHER SCREEN
      ============================================================ -->
@@ -974,7 +974,7 @@ select.input option { background: var(--surface2); }
       <button class="btn btn-ghost btn-sm" onclick="showScreen('landing-screen')">← Zurück</button>
     </div>
   </nav>
-
+ 
   <div class="teacher-layout">
     <div class="sidebar">
       <div class="sidebar-title">Navigation</div>
@@ -990,7 +990,7 @@ select.input option { background: var(--surface2); }
         <span class="sidebar-btn-icon">ℹ️</span> Hilfe
       </button>
     </div>
-
+ 
     <div class="main-panel">
       <!-- Groups Tab -->
       <div id="panel-groups">
@@ -1005,7 +1005,7 @@ select.input option { background: var(--surface2); }
           <!-- filled by JS -->
         </div>
       </div>
-
+ 
       <!-- Create Group Tab -->
       <div id="panel-create" style="display:none">
         <div class="panel-header">
@@ -1043,24 +1043,24 @@ select.input option { background: var(--surface2); }
               </div>
             </div>
           </div>
-
+ 
           <div class="section-divider">
             <div class="section-divider-line"></div>
             <div class="section-divider-text">Grammatik-Strukturen auswählen</div>
             <div class="section-divider-line"></div>
           </div>
-
+ 
           <div class="form-group" style="margin-bottom:16px">
             <div class="form-label">Verfügbare Strukturen für gewähltes Niveau</div>
             <div class="grammar-grid" id="grammar-grid"></div>
           </div>
-
+ 
           <div class="section-divider">
             <div class="section-divider-line"></div>
             <div class="section-divider-text">Reihenfolge festlegen</div>
             <div class="section-divider-line"></div>
           </div>
-
+ 
           <div class="form-group" style="margin-bottom:24px">
             <div class="form-label">Ausgewählte Strukturen – Reihenfolge per Drag & Drop</div>
             <div class="order-list" id="order-list">
@@ -1070,14 +1070,14 @@ select.input option { background: var(--surface2); }
               </div>
             </div>
           </div>
-
+ 
           <div style="display:flex;gap:12px;flex-wrap:wrap">
             <button class="btn btn-primary" onclick="saveGroup()">✅ Gruppe speichern</button>
             <button class="btn btn-ghost" onclick="teacherTab('groups')">Abbrechen</button>
           </div>
         </div>
       </div>
-
+ 
       <!-- Group Detail / Results -->
       <div id="panel-group-detail" style="display:none">
         <div class="panel-header">
@@ -1091,16 +1091,16 @@ select.input option { background: var(--surface2); }
             <button class="btn btn-danger btn-sm" onclick="deleteGroup()">🗑️ Löschen</button>
           </div>
         </div>
-
+ 
         <!-- Group info card -->
         <div id="detail-info-card" style="margin-bottom:24px"></div>
-
+ 
         <!-- Tab bar -->
         <div class="tab-bar" style="max-width:340px;margin-bottom:24px">
           <button class="tab-bar-btn active" id="dtab-results" onclick="detailTab('results')">📊 Ergebnisse</button>
           <button class="tab-bar-btn" id="dtab-config" onclick="detailTab('config')">⚙️ Konfiguration</button>
         </div>
-
+ 
         <div id="detail-results-panel">
           <div id="results-table-container"></div>
         </div>
@@ -1111,7 +1111,7 @@ select.input option { background: var(--surface2); }
     </div>
   </div>
 </div>
-
+ 
 <!-- ============================================================
      STUDENT JOIN SCREEN
      ============================================================ -->
@@ -1122,27 +1122,27 @@ select.input option { background: var(--surface2); }
       <button class="btn btn-ghost btn-sm" onclick="showScreen('landing-screen')">← Zurück</button>
     </div>
   </nav>
-
+ 
   <div style="display:flex;align-items:center;justify-content:center;flex:1;padding:40px 20px">
     <div class="join-card">
       <div style="font-size:3rem;margin-bottom:16px">🎮</div>
       <div class="join-title">Test beitreten</div>
       <div class="join-subtitle">Gib den Zugangscode deiner Lehrkraft ein</div>
-
+ 
       <div class="form-group" style="margin-bottom:16px">
         <div class="form-label">Dein Name</div>
         <input class="input" id="student-name" placeholder="Vorname Nachname" maxlength="40">
       </div>
-
+ 
       <div class="form-group" style="margin-bottom:28px">
         <div class="form-label">Zugangscode</div>
         <input class="input join-code-input" id="join-code" placeholder="ABC123" maxlength="6" oninput="this.value=this.value.toUpperCase()">
       </div>
-
+ 
       <button class="btn btn-primary btn-lg" style="width:100%" onclick="joinGroup()">
         🚀 Test starten!
       </button>
-
+ 
       <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);text-align:center">
         <div style="font-size:0.82rem;color:var(--text3);margin-bottom:10px">Oder Demo direkt starten:</div>
         <button class="btn btn-secondary btn-sm" onclick="startDemo()">▶️ Demo-Test (B1)</button>
@@ -1150,7 +1150,7 @@ select.input option { background: var(--surface2); }
     </div>
   </div>
 </div>
-
+ 
 <!-- ============================================================
      TEST SCREEN
      ============================================================ -->
@@ -1160,13 +1160,13 @@ select.input option { background: var(--surface2); }
       <div class="test-task-name" id="test-task-name">Aufgabe</div>
       <div class="test-progress-text" id="test-progress-text">Frage 1 von 10</div>
     </div>
-
+ 
     <div style="flex:1;max-width:360px">
       <div class="progress-bar">
         <div class="progress-fill" id="test-progress-bar" style="width:0%"></div>
       </div>
     </div>
-
+ 
     <div class="test-header-right">
       <div class="streak-badge" id="streak-badge">🔥 <span id="streak-num">0</span></div>
       <div class="xp-bar-container">
@@ -1181,14 +1181,14 @@ select.input option { background: var(--surface2); }
       <div class="timer-display" id="timer-display">⏱ <span id="timer-num">30</span>s</div>
     </div>
   </div>
-
+ 
   <div class="test-body">
     <div class="question-container" id="question-container">
       <!-- filled by JS -->
     </div>
   </div>
 </div>
-
+ 
 <!-- ============================================================
      RESULTS SCREEN
      ============================================================ -->
@@ -1203,16 +1203,16 @@ select.input option { background: var(--surface2); }
     <!-- filled by JS -->
   </div>
 </div>
-
+ 
 </div><!-- #app -->
-
+ 
 <!-- ============================================================
      MODALS
      ============================================================ -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
   <div class="modal" id="modal-content"></div>
 </div>
-
+ 
 <script>
 /* ============================================================
    DATA & STATE
@@ -1246,14 +1246,14 @@ const GRAMMAR_BY_LEVEL = {
     'Coherence & cohesion devices', 'Register & style variation'
   ]
 };
-
+ 
 let groups = JSON.parse(localStorage.getItem('lq_groups') || '[]');
 let currentGroup = null;
 let editingGroupId = null;
 let selectedGrammar = [];
 let orderedGrammar = [];
 let dragSrcEl = null;
-
+ 
 // Test state
 let testState = {
   groupId: null,
@@ -1269,7 +1269,7 @@ let testState = {
   startTime: null,
   submitted: false
 };
-
+ 
 /* ============================================================
    SCREEN MANAGEMENT
    ============================================================ */
@@ -1277,7 +1277,7 @@ function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
-
+ 
 /* ============================================================
    TOAST
    ============================================================ */
@@ -1289,7 +1289,7 @@ function toast(msg, type = 'info') {
   document.getElementById('toast-container').appendChild(el);
   setTimeout(() => el.remove(), 3200);
 }
-
+ 
 /* ============================================================
    MODAL
    ============================================================ */
@@ -1304,7 +1304,7 @@ function closeModal(e) {
 function closeModalDirect() {
   document.getElementById('modal-overlay').classList.remove('open');
 }
-
+ 
 /* ============================================================
    TEACHER DASHBOARD
    ============================================================ */
@@ -1313,7 +1313,7 @@ function teacherInit() {
   updateGrammarList();
   generateCode();
 }
-
+ 
 function teacherTab(tab) {
   ['groups','create','group-detail'].forEach(t => {
     const el = document.getElementById(`panel-${t}`);
@@ -1323,11 +1323,11 @@ function teacherTab(tab) {
     const btn = document.getElementById(`sb-${id}`);
     if(btn) btn.classList.remove('active');
   });
-
+ 
   document.getElementById(`panel-${tab}`).style.display = '';
   const sbBtn = document.getElementById(`sb-${tab}`);
   if(sbBtn) sbBtn.classList.add('active');
-
+ 
   if(tab === 'create') {
     if(!editingGroupId) {
       document.getElementById('create-panel-title').textContent = 'Neue Gruppe erstellen';
@@ -1341,14 +1341,14 @@ function teacherTab(tab) {
     }
   }
 }
-
+ 
 function generateCode() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   let code = '';
   for(let i=0;i<6;i++) code += chars[Math.floor(Math.random()*chars.length)];
   document.getElementById('group-code').value = code;
 }
-
+ 
 function updateGrammarList() {
   const level = document.getElementById('group-level').value;
   const list = GRAMMAR_BY_LEVEL[level];
@@ -1361,7 +1361,7 @@ function updateGrammarList() {
   `).join('');
   renderOrderList();
 }
-
+ 
 function toggleGrammar(g) {
   if(selectedGrammar.includes(g)) {
     selectedGrammar = selectedGrammar.filter(x=>x!==g);
@@ -1372,7 +1372,7 @@ function toggleGrammar(g) {
   }
   updateGrammarList();
 }
-
+ 
 function renderOrderList() {
   const list = document.getElementById('order-list');
   if(orderedGrammar.length === 0) {
@@ -1389,7 +1389,7 @@ function renderOrderList() {
     </div>
   `).join('');
 }
-
+ 
 // Drag & Drop for order list
 function dndStart(e) { dragSrcEl = e.currentTarget; e.currentTarget.classList.add('dragging'); }
 function dndOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
@@ -1403,7 +1403,7 @@ function dndDrop(e) {
   orderedGrammar.splice(toIdx, 0, moved);
   renderOrderList();
 }
-
+ 
 function saveGroup() {
   const name = document.getElementById('group-name').value.trim();
   const cls = document.getElementById('group-class').value.trim();
@@ -1411,7 +1411,7 @@ function saveGroup() {
   const code = document.getElementById('group-code').value;
   if(!name) { toast('Bitte Gruppenname eingeben', 'error'); return; }
   if(orderedGrammar.length === 0) { toast('Bitte mindestens eine Grammatikstruktur auswählen', 'error'); return; }
-
+ 
   if(editingGroupId) {
     const idx = groups.findIndex(g=>g.id===editingGroupId);
     if(idx>=0) { groups[idx] = {...groups[idx], name, cls, level, code, grammar: [...orderedGrammar], updatedAt: Date.now()}; }
@@ -1431,7 +1431,7 @@ function saveGroup() {
   teacherTab('groups');
   renderGroups();
 }
-
+ 
 function renderGroups() {
   const grid = document.getElementById('groups-grid');
   if(groups.length === 0) {
@@ -1471,9 +1471,9 @@ function renderGroups() {
     </div>`;
   }).join('');
 }
-
+ 
 function levelIcon(l) { return {A2:'🌱',B1:'🌿',B2:'🌳',C1:'🏆'}[l]||'📚'; }
-
+ 
 function openGroupDetail(id) {
   currentGroup = groups.find(g=>g.id===id);
   if(!currentGroup) return;
@@ -1482,12 +1482,12 @@ function openGroupDetail(id) {
   document.getElementById('panel-group-detail').style.display = '';
   renderGroupDetail();
 }
-
+ 
 function renderGroupDetail() {
   const g = currentGroup;
   document.getElementById('detail-title').textContent = g.name;
   document.getElementById('detail-subtitle').textContent = `${g.cls||''} · Niveau ${g.level} · Code: ${g.code}`;
-
+ 
   document.getElementById('detail-info-card').innerHTML = `
     <div class="card" style="display:flex;gap:24px;flex-wrap:wrap;align-items:center">
       <div style="font-size:3rem">${levelIcon(g.level)}</div>
@@ -1505,10 +1505,10 @@ function renderGroupDetail() {
         <div class="stat"><div class="stat-val">${g.grammar.length}</div><div class="stat-label">Strukturen</div></div>
       </div>
     </div>`;
-
+ 
   detailTab('results');
 }
-
+ 
 function detailTab(tab) {
   ['results','config'].forEach(t => {
     document.getElementById(`detail-${t}-panel`).style.display = t===tab?'':'none';
@@ -1517,7 +1517,7 @@ function detailTab(tab) {
   if(tab==='results') renderResultsTable();
   if(tab==='config') renderConfigDisplay();
 }
-
+ 
 function renderResultsTable() {
   const g = currentGroup;
   const students = g.students || [];
@@ -1557,7 +1557,7 @@ function renderResultsTable() {
       </tbody>
     </table></div>`;
 }
-
+ 
 function renderConfigDisplay() {
   const g = currentGroup;
   document.getElementById('config-display').innerHTML = `
@@ -1572,7 +1572,7 @@ function renderConfigDisplay() {
       </div>
     </div>`;
 }
-
+ 
 function editGroupById(id) {
   event.stopPropagation();
   const g = groups.find(gr=>gr.id===id);
@@ -1588,9 +1588,9 @@ function editGroupById(id) {
   updateGrammarList();
   teacherTab('create');
 }
-
+ 
 function editGroup() { editingGroupId = currentGroup.id; editGroupById(currentGroup.id); }
-
+ 
 function deleteGroupById(id) {
   event.stopPropagation();
   if(!confirm('Gruppe wirklich löschen? Alle Ergebnisse gehen verloren.')) return;
@@ -1599,9 +1599,9 @@ function deleteGroupById(id) {
   renderGroups();
   toast('Gruppe gelöscht', 'info');
 }
-
+ 
 function deleteGroup() { deleteGroupById(currentGroup.id); teacherTab('groups'); }
-
+ 
 function clearResults() {
   if(!confirm('Alle Ergebnisse dieser Gruppe löschen?')) return;
   currentGroup.students = [];
@@ -1609,9 +1609,9 @@ function clearResults() {
   renderResultsTable();
   toast('Ergebnisse gelöscht', 'info');
 }
-
+ 
 function saveGroups() { localStorage.setItem('lq_groups', JSON.stringify(groups)); }
-
+ 
 function showInfo() {
   openModal(`
     <div style="text-align:center;margin-bottom:24px">
@@ -1627,7 +1627,7 @@ function showInfo() {
     <button class="btn btn-primary" style="width:100%;margin-top:24px" onclick="closeModalDirect()">Verstanden!</button>
   `);
 }
-
+ 
 /* ============================================================
    STUDENT JOIN
    ============================================================ */
@@ -1640,7 +1640,7 @@ function joinGroup() {
   if(!g) { toast('Code nicht gefunden – bitte überprüfe die Eingabe', 'error'); return; }
   startTest(g, name);
 }
-
+ 
 function startDemo() {
   const name = document.getElementById('student-name').value.trim() || 'Demo-Schüler*in';
   const demoGroup = {
@@ -1650,7 +1650,7 @@ function startDemo() {
   };
   startTest(demoGroup, name);
 }
-
+ 
 /* ============================================================
    TEST ENGINE
    ============================================================ */
@@ -1753,7 +1753,7 @@ const QUESTION_TEMPLATES = {
     { type: 'mc', q: 'The letter ___ yesterday was important.', opts: ['received','receiving','receive','having received'], ans: 0 }
   ]
 };
-
+ 
 // Fallback generic questions for any grammar topic
 function genericQuestions(grammar) {
   return [
@@ -1762,7 +1762,7 @@ function genericQuestions(grammar) {
     { type: 'mc', q: `"${grammar}" is used to express:`, opts: ['completed actions','future plans','daily routines','imaginary situations'], ans: 0 }
   ];
 }
-
+ 
 function buildQuestions(grammar) {
   let qs = [];
   grammar.forEach(g => {
@@ -1774,7 +1774,7 @@ function buildQuestions(grammar) {
   // shuffle
   return qs.sort(()=>Math.random()-0.5).slice(0, Math.min(20, qs.length));
 }
-
+ 
 function startTest(group, studentName) {
   testState = {
     groupId: group.id,
@@ -1795,39 +1795,39 @@ function startTest(group, studentName) {
   showScreen('test-screen');
   renderQuestion();
 }
-
+ 
 function renderQuestion() {
   const state = testState;
   const q = state.questions[state.currentQ];
   const total = state.questions.length;
   const pct = Math.round((state.currentQ / total) * 100);
-
+ 
   document.getElementById('test-task-name').textContent = q.grammar || 'Grammatik';
   document.getElementById('test-progress-text').textContent = `Frage ${state.currentQ+1} von ${total}`;
   document.getElementById('test-progress-bar').style.width = pct + '%';
   document.getElementById('streak-num').textContent = state.streak;
   document.getElementById('xp-num').textContent = state.xp;
   document.getElementById('xp-bar').style.width = Math.min((state.xp % 100), 100) + '%';
-
+ 
   startTimer();
-
+ 
   const container = document.getElementById('question-container');
   container.innerHTML = '';
-
+ 
   const wrap = document.createElement('div');
   wrap.innerHTML = buildQuestionHTML(q);
   container.appendChild(wrap);
-
+ 
   // Attach drag events after render
   if(q.type === 'dnd') attachDndEvents(q);
   if(q.type === 'reorder') attachReorderEvents(q);
   if(q.type === 'error') attachErrorEvents(q);
 }
-
+ 
 function buildQuestionHTML(q) {
   const typeLabels = { mc:'Multiple Choice', fib:'Lückentext', dnd:'Drag & Drop', reorder:'Satz sortieren', error:'Fehler finden', matching:'Zuordnung' };
   const typeIcons = { mc:'🔘', fib:'✏️', dnd:'🧩', reorder:'🔀', error:'🔍', matching:'🔗' };
-
+ 
   let body = '';
   switch(q.type) {
     case 'mc': body = buildMC(q); break;
@@ -1837,7 +1837,7 @@ function buildQuestionHTML(q) {
     case 'error': body = buildError(q); break;
     default: body = buildMC(q);
   }
-
+ 
   return `
     <div class="question-type-badge">${typeIcons[q.type]||'📝'} ${typeLabels[q.type]||q.type}</div>
     ${q.hint ? `<div style="display:flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--yellow);margin-bottom:12px">💡 Tipp: ${q.hint}</div>` : ''}
@@ -1848,7 +1848,7 @@ function buildQuestionHTML(q) {
       <button class="btn btn-primary" id="submit-q-btn" onclick="submitQuestion()">Prüfen ✓</button>
     </div>`;
 }
-
+ 
 function buildMC(q) {
   const letters = ['A','B','C','D'];
   return `
@@ -1861,7 +1861,7 @@ function buildMC(q) {
         </div>`).join('')}
     </div>`;
 }
-
+ 
 function buildFIB(q) {
   return `
     <div class="question-text">${esc(q.q).replace('___','<span class="blank"></span>')}</div>
@@ -1870,13 +1870,13 @@ function buildFIB(q) {
       <input class="fib-input" id="fib-answer" placeholder="Antwort eingeben..." autocomplete="off" autocorrect="off" spellcheck="false" onkeydown="if(event.key==='Enter')submitQuestion()">
     </div>`;
 }
-
+ 
 function buildDND(q) {
   const parts = q.sentence.map((w,i) => {
     if(w === '___') return `<span class="drop-zone" id="dz-${i}" data-idx="${i}" ondragover="dzOver(event)" ondrop="dzDrop(event,${i})" ondragenter="dzEnter(event)" ondragleave="dzLeave(event)">&nbsp;&nbsp;&nbsp;</span>`;
     return `<span style="margin:0 3px">${esc(w)}</span>`;
   }).join(' ');
-
+ 
   const shuffled = [...q.words].sort(()=>Math.random()-0.5);
   return `
     <div class="question-text">Ziehe das richtige Wort in die Lücke:</div>
@@ -1885,7 +1885,7 @@ function buildDND(q) {
       ${shuffled.map((w,i) => `<div class="drag-word" id="dw-${i}" draggable="true" data-word="${esc(w)}" ondragstart="dwStart(event)">${esc(w)}</div>`).join('')}
     </div>`;
 }
-
+ 
 function buildReorder(q) {
   const shuffled = [...q.words].sort(()=>Math.random()-0.5);
   return `
@@ -1899,7 +1899,7 @@ function buildReorder(q) {
     </div>
     <div style="font-size:0.8rem;color:var(--text3);margin-top:10px;text-align:center">Klicke auf Wörter oder ziehe sie in die richtige Position</div>`;
 }
-
+ 
 function buildError(q) {
   const words = q.sentence.split(' ');
   const wordHtml = words.map((w,i) => `<span class="error-word" id="ew-${i}" onclick="selectError(${i},'${w.replace(/'/g,"\\'")}','${q.errorWord.replace(/'/g,"\\'")}','${q.correction.replace(/'/g,"\\'")}',this)">${esc(w)}</span>`).join(' ');
@@ -1908,14 +1908,14 @@ function buildError(q) {
     <div class="error-sentence" id="error-sentence">${wordHtml}</div>
     <div id="error-correction" style="display:none;margin-top:12px"></div>`;
 }
-
+ 
 /* DND events */
 let dzCurrentWord = null;
 let dzCurrentEl = null;
 let dzFilledWord = null;
-
+ 
 function attachDndEvents(q) { /* events attached inline */ }
-
+ 
 function dwStart(e) {
   dzCurrentWord = e.target.dataset.word;
   dzCurrentEl = e.target;
@@ -1934,14 +1934,14 @@ function dzDrop(e, idx) {
   dz.classList.add('filled');
   dz.dataset.answer = dzCurrentWord;
 }
-
+ 
 /* Reorder events */
 let reorderPlaced = [];
 let reorderDragWord = null;
 let reorderDragSrc = null;
-
+ 
 function attachReorderEvents(q) { reorderPlaced = []; }
-
+ 
 function reorderDragStart(e) {
   reorderDragWord = e.target.dataset.word;
   reorderDragSrc = e.target.dataset.src;
@@ -1982,7 +1982,7 @@ function renderReorderTarget() {
     t.appendChild(el);
   });
 }
-
+ 
 /* Error events */
 let errorSelected = null;
 function selectError(idx, word, errorWord, correction, el) {
@@ -1991,14 +1991,14 @@ function selectError(idx, word, errorWord, correction, el) {
   errorSelected = idx;
   el.classList.add('selected-error');
 }
-
+ 
 function attachErrorEvents(q) { errorSelected = null; }
-
+ 
 function selectMC(i) {
   document.querySelectorAll('.mc-option').forEach(el => el.classList.remove('selected'));
   document.getElementById('mc-' + i).classList.add('selected');
 }
-
+ 
 /* ============================================================
    SUBMIT & SCORING
    ============================================================ */
@@ -2006,10 +2006,10 @@ function submitQuestion() {
   const state = testState;
   const q = state.questions[state.currentQ];
   clearInterval(state.timerInterval);
-
+ 
   let isCorrect = false;
   let userAnswer = '';
-
+ 
   switch(q.type) {
     case 'mc': {
       const sel = document.querySelector('.mc-option.selected');
@@ -2078,7 +2078,7 @@ function submitQuestion() {
       break;
     }
   }
-
+ 
   // XP & streak
   let xpGain = 0;
   if(isCorrect) {
@@ -2091,11 +2091,11 @@ function submitQuestion() {
   } else {
     state.streak = 0;
   }
-
+ 
   document.getElementById('streak-num').textContent = state.streak;
   document.getElementById('xp-num').textContent = state.xp;
   document.getElementById('xp-bar').style.width = Math.min((state.xp % 100), 100) + '%';
-
+ 
   // Feedback
   const fb = document.getElementById('feedback-area');
   if(fb) {
@@ -2105,15 +2105,15 @@ function submitQuestion() {
       ${!isCorrect && q.ans !== undefined && q.type === 'fib' ? `<span style="font-size:0.85rem;opacity:0.8">Richtig: "${esc(q.ans)}"</span>` : ''}
     </div>`;
   }
-
+ 
   // Record answer
   state.answers.push({ q, isCorrect, userAnswer, correct: getCorrectAnswer(q) });
-
+ 
   // Disable submit
   const btn = document.getElementById('submit-q-btn');
   if(btn) { btn.textContent = state.currentQ+1 < state.questions.length ? 'Weiter →' : 'Abschließen ✓'; btn.onclick = nextQuestion; }
 }
-
+ 
 function getCorrectAnswer(q) {
   switch(q.type) {
     case 'mc': return q.opts[q.ans];
@@ -2124,14 +2124,14 @@ function getCorrectAnswer(q) {
     default: return q.ans || '';
   }
 }
-
+ 
 function normalize(str) {
   return str.trim().toLowerCase()
     .replace(/['']/g,"'")
     .replace(/\s+/g,' ')
     .replace(/[.!?,]/g,'');
 }
-
+ 
 function nextQuestion() {
   testState.currentQ++;
   if(testState.currentQ >= testState.questions.length) {
@@ -2140,7 +2140,7 @@ function nextQuestion() {
     renderQuestion();
   }
 }
-
+ 
 function startTimer() {
   clearInterval(testState.timerInterval);
   testState.timerLeft = 30;
@@ -2160,7 +2160,7 @@ function startTimer() {
     }
   }, 1000);
 }
-
+ 
 function updateTimerDisplay() {
   const el = document.getElementById('timer-num');
   const disp = document.getElementById('timer-display');
@@ -2168,7 +2168,7 @@ function updateTimerDisplay() {
   el.textContent = testState.timerLeft;
   disp.className = 'timer-display' + (testState.timerLeft <= 10 ? ' danger' : testState.timerLeft <= 20 ? ' warning' : '');
 }
-
+ 
 /* ============================================================
    XP ANIMATIONS
    ============================================================ */
@@ -2180,7 +2180,7 @@ function showXpPopup(xp) {
   document.body.appendChild(el);
   setTimeout(() => el.remove(), 1300);
 }
-
+ 
 function showStreakBonus(streak) {
   openModal(`
     <div style="text-align:center">
@@ -2191,7 +2191,7 @@ function showStreakBonus(streak) {
     </div>`);
   setTimeout(closeModalDirect, 2000);
 }
-
+ 
 /* ============================================================
    FINISH TEST & RESULTS
    ============================================================ */
@@ -2202,7 +2202,7 @@ function finishTest() {
   const correct = state.answers.filter(a=>a.isCorrect).length;
   const score = Math.round((correct/total)*100);
   const timeSecs = Math.round((Date.now() - state.startTime) / 1000);
-
+ 
   // Determine achieved level
   const g = state.groupObj;
   const targetLevel = g.level;
@@ -2210,7 +2210,7 @@ function finishTest() {
   if(score >= 85) achievedLevel = targetLevel;
   else if(score >= 70) achievedLevel = {A2:'A2',B1:'A2',B2:'B1',C1:'B2'}[targetLevel]||'B1';
   else if(score >= 55) achievedLevel = {A2:'A2',B1:'A2',B2:'A2',C1:'B1'}[targetLevel]||'A2';
-
+ 
   // Per-grammar stats
   const grammarStats = {};
   state.answers.forEach(a => {
@@ -2219,7 +2219,7 @@ function finishTest() {
     grammarStats[g2].total++;
     if(a.isCorrect) grammarStats[g2].correct++;
   });
-
+ 
   // Save result
   if(g.id !== 'demo') {
     const targetGroup = groups.find(gr=>gr.id===g.id);
@@ -2233,15 +2233,15 @@ function finishTest() {
       saveGroups();
     }
   }
-
+ 
   // Confetti for good scores
   if(score >= 70) spawnConfetti();
-
+ 
   // Build results screen
   showScreen('results-screen');
   const levelColors = {A2:'var(--a2)',B1:'var(--b1)',B2:'var(--b2)',C1:'var(--c1)'};
   const levelDescs = {A2:'Grundkenntnisse',B1:'Fortgeschrittene Grundkenntnisse',B2:'Selbstständig',C1:'Kompetente Verwendung'};
-
+ 
   const skillBarsHtml = Object.entries(grammarStats).map(([gr, st]) => {
     const pct = Math.round((st.correct/st.total)*100);
     const color = pct>=80?'var(--green)':pct>=60?'var(--yellow)':'var(--red)';
@@ -2250,7 +2250,7 @@ function finishTest() {
       <div class="progress-bar"><div style="height:100%;width:${pct}%;background:${color};border-radius:99px;transition:width 1s;box-shadow:0 0 8px ${color}40"></div></div>
     </div>`;
   }).join('');
-
+ 
   const reviewHtml = state.answers.map((a,i) => `
     <div class="review-item">
       <div class="review-icon">${a.isCorrect?'✅':'❌'}</div>
@@ -2262,7 +2262,7 @@ function finishTest() {
       </div>
       <div><span class="review-badge ${a.isCorrect?'review-badge-correct':'review-badge-wrong'}">${a.isCorrect?'+XP':'Falsch'}</span></div>
     </div>`).join('');
-
+ 
   document.getElementById('results-content').innerHTML = `
     <div class="results-card">
       <div class="results-hero">
@@ -2291,10 +2291,10 @@ function finishTest() {
             <div style="font-size:0.92rem;line-height:1.6">${getFeedback(score, achievedLevel, targetLevel)}</div>
           </div>
         </div>
-
+ 
         <div class="results-section-title">📊 Leistung je Struktur</div>
         <div class="skill-bars" id="skill-bars-container">${skillBarsHtml}</div>
-
+ 
         <div class="results-section-title" style="margin-top:32px">
           🔍 Detailansicht
           <div class="tab-bar" style="max-width:260px;margin-left:auto">
@@ -2304,14 +2304,14 @@ function finishTest() {
           </div>
         </div>
         <div class="review-list" id="review-list">${reviewHtml}</div>
-
+ 
         <div style="display:flex;gap:12px;margin-top:32px;flex-wrap:wrap">
           <button class="btn btn-primary btn-lg" onclick="showScreen('landing-screen')">🏠 Startseite</button>
           <button class="btn btn-secondary" onclick="window.print()">🖨️ Ergebnis drucken</button>
         </div>
       </div>
     </div>`;
-
+ 
   // Animate skill bars after render
   setTimeout(() => {
     document.querySelectorAll('#skill-bars-container .progress-bar div').forEach(el => {
@@ -2321,7 +2321,7 @@ function finishTest() {
     });
   }, 100);
 }
-
+ 
 function filterReview(mode) {
   ['all','wrong','correct'].forEach(m => document.getElementById(`rv-${m}`)?.classList.toggle('active', m===mode));
   const items = document.querySelectorAll('.review-item');
@@ -2333,14 +2333,14 @@ function filterReview(mode) {
     else el.style.display='none';
   });
 }
-
+ 
 function getFeedback(score, achieved, target) {
   if(score >= 85) return `🌟 Ausgezeichnet! Du hast das Niveau <strong style="color:var(--green)">${achieved}</strong> erreicht – genau wie angestrebt. Weiter so!`;
   if(score >= 70) return `👍 Gute Leistung! Du zeigst solide Kenntnisse auf <strong style="color:var(--yellow)">${achieved}</strong>-Niveau. Übe die markierten Bereiche noch etwas mehr.`;
   if(score >= 55) return `💪 Solider Start! Du bist auf <strong style="color:var(--yellow)">${achieved}</strong>-Niveau. Mit etwas mehr Übung erreichst du bald das Ziel!`;
   return `📚 Noch etwas Übung nötig. Fokussiere dich auf die Bereiche mit rotem Balken. Du schaffst das!`;
 }
-
+ 
 /* ============================================================
    CONFETTI
    ============================================================ */
@@ -2354,7 +2354,7 @@ function spawnConfetti() {
     setTimeout(()=>el.remove(), 6000);
   }
 }
-
+ 
 /* ============================================================
    UTILS
    ============================================================ */
